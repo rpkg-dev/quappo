@@ -30,8 +30,8 @@ for \code{format = "html"}.}
 
 \item{in_rstudio_viewer}{Whether to open the output file in the RStudio viewer pane if possible, i.e. RStudio \link[rstudioapi:isAvailable]{is available}. If
 \code{FALSE} or RStudio is unavailable, the output file is opened in the system's default application for \code{output_format} via \code{\link[xopen:xopen]{xopen::xopen()}} instead. Note
-that only PDFs within the \R session temporary directory can be opened in RStudio's viewer pane, others are automatically passed to system's default PDF
-viewer.}
+that only PDFs within the \R session temporary directory can be opened in RStudio's viewer pane, others are automatically passed to the system's default
+PDF viewer.}
 }
 \value{
 For \code{format = "html"}, a \code{\link[httpuv:WebServer]{httpuv::WebServer}} object. For \code{format = "pdf"}, the path to the PDF file. Invisibly in both cases.

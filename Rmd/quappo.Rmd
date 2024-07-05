@@ -51,6 +51,10 @@ this_pkg <- utils::packageName()
 
 ## `view_output`
 
+TODO:
+
+-   Support projects with no `index.html` output (single files). This requires us to first determine a "main" input file from the `input` dir.
+
 ```{r}
 #' View Quarto output
 #'
@@ -77,8 +81,8 @@ this_pkg <- utils::packageName()
 #'   for `format = "html"`.
 #' @param in_rstudio_viewer Whether to open the output file in the RStudio viewer pane if possible, i.e. RStudio [is available][rstudioapi::isAvailable]. If
 #'   `FALSE` or RStudio is unavailable, the output file is opened in the system's default application for `output_format` via [xopen::xopen()] instead. Note
-#'   that only PDFs within the \R session temporary directory can be opened in RStudio's viewer pane, others are automatically passed to system's default PDF
-#'   viewer.
+#'   that only PDFs within the \R session temporary directory can be opened in RStudio's viewer pane, others are automatically passed to the system's default
+#'   PDF viewer.
 #'
 #' @return For `format = "html"`, a [`httpuv::WebServer`][httpuv::WebServer] object. For `format = "pdf"`, the path to the PDF file. Invisibly in both cases.
 #' @export
