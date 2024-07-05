@@ -9,11 +9,12 @@ fig_chunk(
   label,
   fig_cap,
   fig_subcap = NULL,
-  fig_column = "body",
+  fig_column = NULL,
   fig_width = NULL,
   fig_height = NULL,
   fig_pos = "H",
   fig_link = NULL,
+  column = NULL,
   out_width = NULL,
   out_height = NULL
 )
@@ -31,7 +32,7 @@ scalar.}
 character vector, or \code{NULL} to omit.}
 
 \item{fig_column}{Quarto \href{https://quarto.org/docs/authoring/article-layout.html#available-columns}{article layout class} for the figure output. Set as
-Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns}{\code{fig-column}} code chunk option. One of
+Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns}{\code{fig-column}} code chunk option. Either \code{NULL} to omit or one of
 \itemize{
 \item \code{"body"}
 \item \code{"body-outset"}
@@ -65,6 +66,28 @@ no figure position specifier, which is sometimes necessary with custom figure en
 \item{fig_link}{Hyperlink target for the figure. Set as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{fig-link}} code chunk
 option. A character scalar, or \code{NULL} to omit.}
 
+\item{column}{Quarto \href{https://quarto.org/docs/authoring/article-layout.html#available-columns}{article layout class} for all of the code chunk's output. Set
+as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns}{\code{column}} code chunk option. Either \code{NULL} to omit or one of
+\itemize{
+\item \code{"body"}
+\item \code{"body-outset"}
+\item \code{"body-outset-left"}
+\item \code{"body-outset-right"}
+\item \code{"page"}
+\item \code{"page-left"}
+\item \code{"page-right"}
+\item \code{"page-inset-left"}
+\item \code{"page-inset-right"}
+\item \code{"screen"}
+\item \code{"screen-left"}
+\item \code{"screen-right"}
+\item \code{"screen-inset"}
+\item \code{"screen-inset-shaded"}
+\item \code{"screen-inset-left"}
+\item \code{"screen-inset-right"}
+\item \code{"margin"}
+}}
+
 \item{out_width}{Width of the plot in the output document, which can be different from its physical \code{fig_width}, i.e., plots can be scaled in the output
 document. Set as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{out-width}} code chunk option. A character scalar, or \code{NULL}
 to omit.}
@@ -90,8 +113,7 @@ Use \link{substitute} together with \code{\link[=deparse1]{deparse1()}} to conve
 quappo::fig_chunk(body = "plot(cars)",
                   label = "fig-mtcars",
                   fig_cap = "Default plot for dataset `cars`",
-                  fig_column = "page") |>
-  cat()
+                  fig_column = "page")
 }
 \seealso{
 Other code chunk functions:

@@ -10,7 +10,8 @@ tbl_chunk(
   tbl_cap,
   tbl_subcap = NULL,
   tbl_colwidths = NULL,
-  tbl_column = "body"
+  tbl_column = NULL,
+  column = NULL
 )
 }
 \arguments{
@@ -41,7 +42,29 @@ widths based on the Markdown text width of cells). \code{"auto"} is the default 
 }}
 
 \item{tbl_column}{Quarto \href{https://quarto.org/docs/authoring/article-layout.html#available-columns}{article layout class} for the figure output. Set as
-Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns}{\code{tbl-column}} code chunk option. One of
+Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns}{\code{tbl-column}} code chunk option. Either \code{NULL} to omit or one of
+\itemize{
+\item \code{"body"}
+\item \code{"body-outset"}
+\item \code{"body-outset-left"}
+\item \code{"body-outset-right"}
+\item \code{"page"}
+\item \code{"page-left"}
+\item \code{"page-right"}
+\item \code{"page-inset-left"}
+\item \code{"page-inset-right"}
+\item \code{"screen"}
+\item \code{"screen-left"}
+\item \code{"screen-right"}
+\item \code{"screen-inset"}
+\item \code{"screen-inset-shaded"}
+\item \code{"screen-inset-left"}
+\item \code{"screen-inset-right"}
+\item \code{"margin"}
+}}
+
+\item{column}{Quarto \href{https://quarto.org/docs/authoring/article-layout.html#available-columns}{article layout class} for all of the code chunk's output. Set
+as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns}{\code{column}} code chunk option. Either \code{NULL} to omit or one of
 \itemize{
 \item \code{"body"}
 \item \code{"body-outset"}
@@ -79,8 +102,7 @@ Use \link{substitute} together with \code{\link[=deparse1]{deparse1()}} to conve
 quappo::tbl_chunk(body = "knitr::kable(head(cars))",
                   label = "tbl-head-cars",
                   tbl_cap = "Head of dataset `cars`",
-                  tbl_column = "margin") |>
-  cat()
+                  tbl_column = "margin")
 }
 \seealso{
 Other code chunk functions:

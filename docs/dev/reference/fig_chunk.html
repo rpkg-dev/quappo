@@ -37,11 +37,12 @@
 <span>  <span class="va">label</span>,</span>
 <span>  <span class="va">fig_cap</span>,</span>
 <span>  fig_subcap <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  fig_column <span class="op">=</span> <span class="st">"body"</span>,</span>
+<span>  fig_column <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fig_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fig_height <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fig_pos <span class="op">=</span> <span class="st">"H"</span>,</span>
 <span>  fig_link <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  out_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  out_height <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -61,7 +62,7 @@ scalar.</p></dd>
 character vector, or <code>NULL</code> to omit.</p></dd>
 <dt id="arg-fig-column">fig_column<a class="anchor" aria-label="anchor" href="#arg-fig-column"></a></dt>
 <dd><p>Quarto <a href="https://quarto.org/docs/authoring/article-layout.html#available-columns" class="external-link">article layout class</a> for the figure output. Set as
-Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns" class="external-link"><code>fig-column</code></a> code chunk option. One of</p><ul><li><p><code>"body"</code></p></li>
+Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns" class="external-link"><code>fig-column</code></a> code chunk option. Either <code>NULL</code> to omit or one of</p><ul><li><p><code>"body"</code></p></li>
 <li><p><code>"body-outset"</code></p></li>
 <li><p><code>"body-outset-left"</code></p></li>
 <li><p><code>"body-outset-right"</code></p></li>
@@ -92,6 +93,26 @@ no figure position specifier, which is sometimes necessary with custom figure en
 <dt id="arg-fig-link">fig_link<a class="anchor" aria-label="anchor" href="#arg-fig-link"></a></dt>
 <dd><p>Hyperlink target for the figure. Set as Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#figures" class="external-link"><code>fig-link</code></a> code chunk
 option. A character scalar, or <code>NULL</code> to omit.</p></dd>
+<dt id="arg-column">column<a class="anchor" aria-label="anchor" href="#arg-column"></a></dt>
+<dd><p>Quarto <a href="https://quarto.org/docs/authoring/article-layout.html#available-columns" class="external-link">article layout class</a> for all of the code chunk's output. Set
+as Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns" class="external-link"><code>column</code></a> code chunk option. Either <code>NULL</code> to omit or one of</p><ul><li><p><code>"body"</code></p></li>
+<li><p><code>"body-outset"</code></p></li>
+<li><p><code>"body-outset-left"</code></p></li>
+<li><p><code>"body-outset-right"</code></p></li>
+<li><p><code>"page"</code></p></li>
+<li><p><code>"page-left"</code></p></li>
+<li><p><code>"page-right"</code></p></li>
+<li><p><code>"page-inset-left"</code></p></li>
+<li><p><code>"page-inset-right"</code></p></li>
+<li><p><code>"screen"</code></p></li>
+<li><p><code>"screen-left"</code></p></li>
+<li><p><code>"screen-right"</code></p></li>
+<li><p><code>"screen-inset"</code></p></li>
+<li><p><code>"screen-inset-shaded"</code></p></li>
+<li><p><code>"screen-inset-left"</code></p></li>
+<li><p><code>"screen-inset-right"</code></p></li>
+<li><p><code>"margin"</code></p></li>
+</ul></dd>
 <dt id="arg-out-width">out_width<a class="anchor" aria-label="anchor" href="#arg-out-width"></a></dt>
 <dd><p>Width of the plot in the output document, which can be different from its physical <code>fig_width</code>, i.e., plots can be scaled in the output
 document. Set as Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#figures" class="external-link"><code>out-width</code></a> code chunk option. A character scalar, or <code>NULL</code>
@@ -123,8 +144,7 @@ to omit.</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">quappo</span><span class="fu">::</span><span class="fu">fig_chunk</span><span class="op">(</span>body <span class="op">=</span> <span class="st">"plot(cars)"</span>,</span></span>
 <span class="r-in"><span>                  label <span class="op">=</span> <span class="st">"fig-mtcars"</span>,</span></span>
 <span class="r-in"><span>                  fig_cap <span class="op">=</span> <span class="st">"Default plot for dataset `cars`"</span>,</span></span>
-<span class="r-in"><span>                  fig_column <span class="op">=</span> <span class="st">"page"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                  fig_column <span class="op">=</span> <span class="st">"page"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```{r}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| label: fig-mtcars</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| fig-cap:</span>
@@ -134,6 +154,7 @@ to omit.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> plot(cars)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

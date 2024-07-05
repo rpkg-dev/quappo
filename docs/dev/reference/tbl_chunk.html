@@ -38,7 +38,8 @@
 <span>  <span class="va">tbl_cap</span>,</span>
 <span>  tbl_subcap <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  tbl_colwidths <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  tbl_column <span class="op">=</span> <span class="st">"body"</span></span>
+<span>  tbl_column <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  column <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
     <div class="section level2">
@@ -67,7 +68,27 @@ widths based on the Markdown text width of cells). <code>"auto"</code> is the de
 </ul></dd>
 <dt id="arg-tbl-column">tbl_column<a class="anchor" aria-label="anchor" href="#arg-tbl-column"></a></dt>
 <dd><p>Quarto <a href="https://quarto.org/docs/authoring/article-layout.html#available-columns" class="external-link">article layout class</a> for the figure output. Set as
-Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns" class="external-link"><code>tbl-column</code></a> code chunk option. One of</p><ul><li><p><code>"body"</code></p></li>
+Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns" class="external-link"><code>tbl-column</code></a> code chunk option. Either <code>NULL</code> to omit or one of</p><ul><li><p><code>"body"</code></p></li>
+<li><p><code>"body-outset"</code></p></li>
+<li><p><code>"body-outset-left"</code></p></li>
+<li><p><code>"body-outset-right"</code></p></li>
+<li><p><code>"page"</code></p></li>
+<li><p><code>"page-left"</code></p></li>
+<li><p><code>"page-right"</code></p></li>
+<li><p><code>"page-inset-left"</code></p></li>
+<li><p><code>"page-inset-right"</code></p></li>
+<li><p><code>"screen"</code></p></li>
+<li><p><code>"screen-left"</code></p></li>
+<li><p><code>"screen-right"</code></p></li>
+<li><p><code>"screen-inset"</code></p></li>
+<li><p><code>"screen-inset-shaded"</code></p></li>
+<li><p><code>"screen-inset-left"</code></p></li>
+<li><p><code>"screen-inset-right"</code></p></li>
+<li><p><code>"margin"</code></p></li>
+</ul></dd>
+<dt id="arg-column">column<a class="anchor" aria-label="anchor" href="#arg-column"></a></dt>
+<dd><p>Quarto <a href="https://quarto.org/docs/authoring/article-layout.html#available-columns" class="external-link">article layout class</a> for all of the code chunk's output. Set
+as Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns" class="external-link"><code>column</code></a> code chunk option. Either <code>NULL</code> to omit or one of</p><ul><li><p><code>"body"</code></p></li>
 <li><p><code>"body-outset"</code></p></li>
 <li><p><code>"body-outset-left"</code></p></li>
 <li><p><code>"body-outset-right"</code></p></li>
@@ -108,8 +129,7 @@ Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#page-
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">quappo</span><span class="fu">::</span><span class="fu">tbl_chunk</span><span class="op">(</span>body <span class="op">=</span> <span class="st">"knitr::kable(head(cars))"</span>,</span></span>
 <span class="r-in"><span>                  label <span class="op">=</span> <span class="st">"tbl-head-cars"</span>,</span></span>
 <span class="r-in"><span>                  tbl_cap <span class="op">=</span> <span class="st">"Head of dataset `cars`"</span>,</span></span>
-<span class="r-in"><span>                  tbl_column <span class="op">=</span> <span class="st">"margin"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span>                  tbl_column <span class="op">=</span> <span class="st">"margin"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```{r}</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| label: tbl-head-cars</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> #| tbl-cap:</span>
@@ -118,6 +138,7 @@ Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#page-
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> knitr::kable(head(cars))</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ```</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

@@ -188,7 +188,7 @@ view_output <- function(input = ".",
 #' @param fig_subcap Figure subcaptions. Set as Quarto's [`fig-subcap`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A
 #'   character vector, or `NULL` to omit.
 #' @param fig_column Quarto [article layout class](https://quarto.org/docs/authoring/article-layout.html#available-columns) for the figure output. Set as
-#'   Quarto's [`fig-column`](https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns) code chunk option. One of
+#'   Quarto's [`fig-column`](https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns) code chunk option. Either `NULL` to omit or one of
 #'   `r pal::as_md_val_list(qmd_layout_classes)`
 #' @param fig_width Width of the plot (in inches), to be used in the graphics device. Set as Quarto's
 #'   [`fig-width`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A numeric scalar, or `NULL` to omit.
@@ -199,6 +199,9 @@ view_output <- function(input = ".",
 #'   no figure position specifier, which is sometimes necessary with custom figure environments (such as `sidewaysfigure`).
 #' @param fig_link Hyperlink target for the figure. Set as Quarto's [`fig-link`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk
 #'   option. A character scalar, or `NULL` to omit.
+#' @param column Quarto [article layout class](https://quarto.org/docs/authoring/article-layout.html#available-columns) for all of the code chunk's output. Set
+#'   as Quarto's [`column`](https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns) code chunk option. Either `NULL` to omit or one of
+#'   `r pal::as_md_val_list(qmd_layout_classes)`
 #' @param out_width Width of the plot in the output document, which can be different from its physical `fig_width`, i.e., plots can be scaled in the output
 #'   document. Set as Quarto's [`out-width`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A character scalar, or `NULL`
 #'   to omit.
@@ -214,17 +217,17 @@ view_output <- function(input = ".",
 #' quappo::fig_chunk(body = "plot(cars)",
 #'                   label = "fig-mtcars",
 #'                   fig_cap = "Default plot for dataset `cars`",
-#'                   fig_column = "page") |>
-#'   cat()
+#'                   fig_column = "page")
 fig_chunk <- function(body,
                       label,
                       fig_cap,
                       fig_subcap = NULL,
-                      fig_column = "body",
+                      fig_column = NULL,
                       fig_width = NULL,
                       fig_height = NULL,
                       fig_pos = "H",
                       fig_link = NULL,
+                      column = NULL,
                       out_width = NULL,
                       out_height = NULL) {
   
@@ -252,8 +255,14 @@ fig_chunk <- function(body,
                            null.ok = TRUE)
   checkmate::assert_string(out_height,
                            null.ok = TRUE)
-  fig_column <- rlang::arg_match(arg = fig_column,
-                                 values = qmd_layout_classes)
+  if (!is.null(fig_column)) {
+    fig_column <- rlang::arg_match(arg = fig_column,
+                                   values = qmd_layout_classes)
+  }
+  if (!is.null(column)) {
+    column <- rlang::arg_match(arg = column,
+                               values = qmd_layout_classes)
+  }
   is_fig_cap_scalar <- length(fig_cap) == 1L
   has_fig_subcap <- length(fig_subcap) > 0L
   
@@ -269,11 +278,12 @@ fig_chunk <- function(body,
                       as_code_chunk_array(fig_cap),
                       "#| fig-subcap:"[has_fig_subcap],
                       fig_subcap,
-                      "#| fig-column: {fig_column}",
+                      "#| fig-column: {fig_column}"[!is.null(fig_column)],
                       "#| fig-width: {as_yaml_inline(fig_width)}"[!is.null(fig_width)],
                       "#| fig-height: {as_yaml_inline(fig_height)}"[!is.null(fig_height)],
                       "#| fig-pos: {fig_pos}"[!is.null(fig_pos)],
                       "#| fig-link: {as_yaml_inline(fig_link)}"[length(fig_link) > 0L],
+                      "#| column: {column}"[!is.null(column)],
                       "#| out-width: {as_yaml_inline(out_width)}"[!is.null(out_width)],
                       "#| out-height: {as_yaml_inline(out_height)}"[!is.null(out_height)],
                       "",
@@ -295,6 +305,7 @@ fig_chunk <- function(body,
 #'          collapse = "\n")
 #' ```
 #'
+#' @inheritParams fig_chunk
 #' @param body \R code to insert into the code chunk's body. A character scalar.
 #' @param label Unique code chunk label. Set as Quarto's [`label`](https://quarto.org/docs/reference/cells/cells-knitr.html#tables) code chunk option. A 
 #'   character scalar that starts with `"tbl-"`.
@@ -302,9 +313,6 @@ fig_chunk <- function(body,
 #'   scalar.
 #' @param tbl_subcap Table subcaptions. Set as Quarto's [`tbl-subcap`](https://quarto.org/docs/reference/cells/cells-knitr.html#tables) code chunk option. A
 #'   character vector.
-#' @param tbl_column Quarto [article layout class](https://quarto.org/docs/authoring/article-layout.html#available-columns) for the figure output. Set as
-#'   Quarto's [`tbl-column`](https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns) code chunk option. One of
-#'   `r pal::as_md_val_list(qmd_layout_classes)`
 #' @param tbl_colwidths Apply explicit table column widths for Markdown [grid tables](https://pandoc.org/MANUAL.html#extension-grid_tables) and [pipe
 #'   tables](https://pandoc.org/MANUAL.html#extension-pipe_tables) that are more than `columns` characters wide (72 by default).
 #' 
@@ -322,6 +330,9 @@ fig_chunk <- function(body,
 #'   - `"false"`: Never apply Markdown table widths.
 #'  
 #'   - A numeric vector (e.g. `c(40, 30, 30)`): Array of explicit width percentages.
+#' @param tbl_column Quarto [article layout class](https://quarto.org/docs/authoring/article-layout.html#available-columns) for the figure output. Set as
+#'   Quarto's [`tbl-column`](https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns) code chunk option. Either `NULL` to omit or one of
+#'   `r pal::as_md_val_list(qmd_layout_classes)`
 #'
 #' @return A character scalar.
 #' @family chunks
@@ -331,14 +342,14 @@ fig_chunk <- function(body,
 #' quappo::tbl_chunk(body = "knitr::kable(head(cars))",
 #'                   label = "tbl-head-cars",
 #'                   tbl_cap = "Head of dataset `cars`",
-#'                   tbl_column = "margin") |>
-#'   cat()
+#'                   tbl_column = "margin")
 tbl_chunk <- function(body,
                       label,
                       tbl_cap,
                       tbl_subcap = NULL,
                       tbl_colwidths = NULL,
-                      tbl_column = "body") {
+                      tbl_column = NULL,
+                      column = NULL) {
   
   checkmate::assert_string(body)
   checkmate::assert_string(label,
@@ -354,8 +365,14 @@ tbl_chunk <- function(body,
   if (!(is.null(tbl_colwidths) || is_str_tbl_colwidths || is_num_tbl_colwidths)) {
     cli::cli_abort('{.arg tbl_colwidths} must be either one of {.val {"auto"}}, {.val {"true"}} or {.val {"false"}}, or a numeric vector.')
   }
-  tbl_column <- rlang::arg_match(arg = tbl_column,
-                                 values = qmd_layout_classes)
+  if (!is.null(tbl_column)) {
+    tbl_column <- rlang::arg_match(arg = tbl_column,
+                                   values = qmd_layout_classes)
+  }
+  if (!is.null(column)) {
+    column <- rlang::arg_match(arg = column,
+                               values = qmd_layout_classes)
+  }
   has_tbl_subcap <- length(tbl_subcap) > 0L
   
   # convert to YAML array
@@ -370,10 +387,11 @@ tbl_chunk <- function(body,
                       as_code_chunk_array(tbl_cap),
                       "#| tbl-subcap:"[has_tbl_subcap],
                       tbl_subcap,
-                      "#| tbl-column: {tbl_column}",
                       "#| tbl-colwidths: {tbl_colwidths}"[is_str_tbl_colwidths],
                       "#| tbl-colwidths:"[is_num_tbl_colwidths],
                       as_code_chunk_array(tbl_colwidths)[is_num_tbl_colwidths],
+                      "#| tbl-column: {tbl_column}"[!is.null(tbl_column)],
+                      "#| column: {column}"[!is.null(column)],
                       "",
                       "{body}",
                       "```",
