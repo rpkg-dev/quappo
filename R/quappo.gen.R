@@ -36,9 +36,14 @@ this_pkg <- utils::packageName()
 
 #' View Quarto output
 #'
+#' @description
 #' Opens a Quarto project's pre-rendered output of the specified `format` in the RStudio viewer pane or the system's default application. For `"html"`, a local
 #' HTTP server is launched that serves the HTML output on [`127.0.0.1:3456`](http://127.0.0.1:3456) by default.
 #'
+#' This is considerably faster and more responsive than [quarto::quarto_preview] (which runs Quarto in the background and automatically reloads the browser when
+#' input files or document resources (e.g. CSS) change).
+#'
+#' @details
 #' Note that the web server started by `view_output()` will continue running in the background until it is explicitly stopped (e.g. via [httpuv::stopServer()]
 #' or [httpuv::stopAllServers()]) or the \R session is terminated. An already running web server on `port` is reused if possible (i.e. if it was launched in the
 #' same \R session), otherwise a port within the range 1024–49151 (["user" or "registered" ports](https://en.wikipedia.org/wiki/Registered_port)) is randomly
@@ -53,7 +58,9 @@ this_pkg <- utils::packageName()
 #'   below 1024 require root privileges. If the specified `port` is already occupied, a randomly chosen port between 1025–49151 is used instead. Only relevant
 #'   for `format = "html"`.
 #' @param in_rstudio_viewer Whether to open the output file in the RStudio viewer pane if possible, i.e. RStudio [is available][rstudioapi::isAvailable]. If
-#'   `FALSE` or RStudio is unavailable, the output file is opened in the system's default application for `output_format` via [xopen::xopen()] instead.
+#'   `FALSE` or RStudio is unavailable, the output file is opened in the system's default application for `output_format` via [xopen::xopen()] instead. Note
+#'   that only PDFs within the \R session temporary directory can be opened in RStudio's viewer pane, others are automatically passed to system's default PDF
+#'   viewer.
 #'
 #' @return For `format = "html"`, a [`httpuv::WebServer`][httpuv::WebServer] object. For `format = "pdf"`, the path to the PDF file. Invisibly in both cases.
 #' @export

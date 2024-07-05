@@ -29,7 +29,9 @@ below 1024 require root privileges. If the specified \code{port} is already occu
 for \code{format = "html"}.}
 
 \item{in_rstudio_viewer}{Whether to open the output file in the RStudio viewer pane if possible, i.e. RStudio \link[rstudioapi:isAvailable]{is available}. If
-\code{FALSE} or RStudio is unavailable, the output file is opened in the system's default application for \code{output_format} via \code{\link[xopen:xopen]{xopen::xopen()}} instead.}
+\code{FALSE} or RStudio is unavailable, the output file is opened in the system's default application for \code{output_format} via \code{\link[xopen:xopen]{xopen::xopen()}} instead. Note
+that only PDFs within the \R session temporary directory can be opened in RStudio's viewer pane, others are automatically passed to system's default PDF
+viewer.}
 }
 \value{
 For \code{format = "html"}, a \code{\link[httpuv:WebServer]{httpuv::WebServer}} object. For \code{format = "pdf"}, the path to the PDF file. Invisibly in both cases.
@@ -37,6 +39,9 @@ For \code{format = "html"}, a \code{\link[httpuv:WebServer]{httpuv::WebServer}} 
 \description{
 Opens a Quarto project's pre-rendered output of the specified \code{format} in the RStudio viewer pane or the system's default application. For \code{"html"}, a local
 HTTP server is launched that serves the HTML output on \href{http://127.0.0.1:3456}{\verb{127.0.0.1:3456}} by default.
+
+This is considerably faster and more responsive than \link[quarto:quarto_preview]{quarto::quarto_preview} (which runs Quarto in the background and automatically reloads the browser when
+input files or document resources (e.g. CSS) change).
 }
 \details{
 Note that the web server started by \code{view_output()} will continue running in the background until it is explicitly stopped (e.g. via \code{\link[httpuv:stopServer]{httpuv::stopServer()}}
