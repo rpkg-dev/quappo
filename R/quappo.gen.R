@@ -541,6 +541,9 @@ chunks <- function(data,
       
       args <- rlang::list2(...)
       
+      # remove `NA`'s (equivalent to `NULL` later on)
+      args[is.na(args)] <- NULL
+      
       # interpolate chunk opts
       if (!is.null(args$itr_vars)) {
         
@@ -550,9 +553,7 @@ chunks <- function(data,
         
         args %<>% purrr::map(\(arg) {
           
-          if (is.atomic(arg) && is.na(arg)) {
-            result <- NULL
-          } else if (is.character(arg)) {
+          if (is.character(arg)) {
             result <- rlang::inject(cli::pluralize(arg,
                                                    !!!args$itr_vars,
                                                    .envir = env))
