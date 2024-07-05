@@ -549,13 +549,18 @@ chunks <- function(data,
         }
         
         args %<>% purrr::map(\(arg) {
-          if (is.character(arg)) {
-            rlang::inject(cli::pluralize(arg,
-                                         !!!args$itr_vars,
-                                         .envir = env))
+          
+          if (is.na(arg)) {
+            result <- NULL
+          } else if (is.character(arg)) {
+            result <- rlang::inject(cli::pluralize(arg,
+                                                   !!!args$itr_vars,
+                                                   .envir = env))
           } else {
-            arg
+            result <- arg
           }
+          
+          result
         })
       }
       
