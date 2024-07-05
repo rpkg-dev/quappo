@@ -29,8 +29,8 @@ CLI.
 
 pkgsnip::md_snip(id = "pkgdown_notice") %>%
   paste0("## Documentation\n\n",
-         "[![Netlify Status](https://api.netlify.com/api/v1/badges/FIX-ME/deploy-status)]",
-         "(https://app.netlify.com/sites/FIX-ME-rpkg-dev/deploys)\n\n",
+         "[![Netlify Status](https://api.netlify.com/api/v1/badges/dc5ecaf8-2407-4b17-a2d2-d755ca26e613/deploy-status)]",
+         "(https://app.netlify.com/sites/quappo-rpkg-dev/deploys)\n\n",
          .) |>
   pal::cat_lines()
 ```
