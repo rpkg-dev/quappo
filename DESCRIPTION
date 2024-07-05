@@ -16,6 +16,7 @@ Imports:
     cli (>= 3.6.3),
     fs (>= 1.6.4),
     glue (>= 1.7.0),
+    httpuv (>= 1.6.15),
     magrittr (>= 2.0.3),
     methods,
     pal (>= 0.0.9101),
@@ -29,7 +30,6 @@ Imports:
     yaml (>= 2.3.8)
 Suggests: 
     clock (>= 0.7.0),
-    httpuv (>= 1.6.15),
     rstudioapi (>= 0.16.0)
 Remotes:
     gitlab::rpkg.dev/pal

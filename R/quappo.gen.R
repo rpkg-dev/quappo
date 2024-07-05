@@ -100,9 +100,6 @@ view_output <- function(input = ".",
   
   if (output_format == "html") {
     
-    rlang::check_installed("httpuv",
-                           reason = pal::reason_pkg_required())
-    
     # ensure `index.html` exists since we only support whole sites for now
     if (!fs::file_exists(fs::path(output_dir, "index.html"))) {
       cli::cli_abort(paste0("No {.file index.html} file found under {.path {output_dir}}. Please first render the specified Quarto project ",
