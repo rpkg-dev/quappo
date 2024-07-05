@@ -550,7 +550,7 @@ chunks <- function(data,
         
         args %<>% purrr::map(\(arg) {
           
-          if (is.na(arg)) {
+          if (is.atomic(arg) && is.na(arg)) {
             result <- NULL
           } else if (is.character(arg)) {
             result <- rlang::inject(cli::pluralize(arg,
