@@ -1,0 +1,13 @@
+template:
+  package: pkgdown.tpl
+url: https://quappo.rpkg.dev
+reference:
+- contents: view_output
+- title: Code chunks
+  desc: Functions to generate and process [Quarto code chunks](https://quarto.org/docs/reference/cells/cells-knitr.html)
+    (aka "code cells").
+- contents:
+  - fig_chunk
+  - tbl_chunk
+  - chunks
+  - read_chunk_toml
