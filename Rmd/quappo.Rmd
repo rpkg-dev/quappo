@@ -90,19 +90,20 @@ view_output <- function(input = ".",
                         port = 3456L,
                         in_rstudio_viewer = interactive()) {
   
+  checkmate::assert_string(host)
+  checkmate::assert_int(port)
+  checkmate::assert_flag(in_rstudio_viewer)
   config <- quarto::quarto_inspect(input = input,
                                    profile = profile)$config
   if (!("project" %in% names(config))) {
     cli::cli_abort("Missing Quarto configuration object {.href [`project`](https://quarto.org/docs/reference/projects/options.html)}.")
   }
   if ("output-dir" %in% names(config$project)) {
-    output_dir <- config$project$`output-dir`
+    output_dir <- fs::path_abs(config$project$`output-dir`,
+                               start = input)
   } else {
     output_dir <- input
   }
-  checkmate::assert_string(host)
-  checkmate::assert_int(port)
-  checkmate::assert_flag(in_rstudio_viewer)
   
   if (!pal::is_pkg_installed("rstudioapi")) {
     in_rstudio_viewer <- FALSE
@@ -115,14 +116,14 @@ view_output <- function(input = ".",
     
     # ensure `index.html` exists since we only support whole sites for now
     if (!fs::file_exists(fs::path(output_dir, "index.html"))) {
-      cli::cli_abort(paste0("No {.file index.html} file found under {.path {input}}. Please first render the specified Quarto project ",
+      cli::cli_abort(paste0("No {.file index.html} file found under {.path {output_dir}}. Please first render the specified Quarto project ",
                             "({.href [book](https://quarto.org/docs/books/)} or {.href [website](https://quarto.org/docs/websites/)}) to ",
                             "{.val {output_format}} (e.g. using {.fun quarto::quarto_render}) and then try again."))
     }
     
     is_port_available <- utils::getFromNamespace(x = "is_port_available",
                                                  ns = "httpuv")
-    paths_static <- list("/" = fs::path_abs(input))
+    paths_static <- list("/" = fs::path_abs(output_dir))
     servers <- httpuv::listServers()
     ports <- purrr::map_int(servers,
                             \(x) x$getPort())
@@ -160,13 +161,13 @@ view_output <- function(input = ".",
       stringr::str_replace_all(string = config$book$title,
                                pattern = "\\s",
                                replacement = "-") |>
-      pal::when(length(.) == 0L,
-                fs::path_file(output_dir)) |>
+      pal::when(length(.) == 0L ~ fs::path_file(output_dir),
+                ~ .) |>
       fs::path(ext = output_format) |>
       fs::path_abs(start = output_dir)
     
     if (!fs::file_exists(target)) {
-      cli::cli_abort(paste0("No output file found under {.path {output_dir}}. Please first render the specified Quarto project to {.val output_format} (e.g. ",
+      cli::cli_abort(paste0("No output file found under {.path {target}}. Please first render the specified Quarto project to {.val output_format} (e.g. ",
                             "using {.fun quarto::quarto_render}) and then try again."))
     }
     
