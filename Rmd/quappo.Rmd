@@ -55,6 +55,10 @@ TODO:
 
 -   Support projects with no `index.html` output (single files). This requires us to first determine a "main" input file from the `input` dir.
 
+NOTES:
+
+-   We can't retrieve the set of valid `output_format`s from a project's Quarto config since output formats can be valid without being explicitly configured.
+
 ```{r}
 #' View Quarto output
 #'
@@ -101,6 +105,7 @@ view_output <- function(input = ".",
                         port = 3456L,
                         in_rstudio_viewer = interactive()) {
   
+  checkmate::assert_string(output_format)
   checkmate::assert_string(host)
   checkmate::assert_int(port)
   checkmate::assert_flag(in_rstudio_viewer)

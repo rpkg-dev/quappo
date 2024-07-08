@@ -79,6 +79,7 @@ view_output <- function(input = ".",
                         port = 3456L,
                         in_rstudio_viewer = interactive()) {
   
+  checkmate::assert_string(output_format)
   checkmate::assert_string(host)
   checkmate::assert_int(port)
   checkmate::assert_flag(in_rstudio_viewer)
