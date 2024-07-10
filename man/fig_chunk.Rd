@@ -59,9 +59,9 @@ Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#page-col
 \item{fig_height}{Height of the plot (in inches), to be used in the graphics device. Set as Quarto's
 \href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{fig-height}} code chunk option. A numeric scalar, or \code{NULL} to omit.}
 
-\item{fig_pos}{LaTeX figure position arrangement to be used in \verb{\\begin\{figure\}[]}. Set as Quarto's
-\href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{fig-pos}} code chunk option. A character scalar, or \code{NULL} to omit. Use \code{"false"} for
-no figure position specifier, which is sometimes necessary with custom figure environments (such as \code{sidewaysfigure}).}
+\item{fig_pos}{LaTeX \href{https://quarto.org/docs/authoring/figures.html#figure-position}{figure position arrangement} to be used in \verb{\\begin\{figure\}[]}. Set as
+Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{fig-pos}} code chunk option. A character scalar, or \code{FALSE} for no figure
+position specifier, which is sometimes necessary with custom figure environments (such as \code{sidewaysfigure}), or \code{NULL} to omit.}
 
 \item{fig_link}{Hyperlink target for the figure. Set as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{fig-link}} code chunk
 option. A character scalar, or \code{NULL} to omit.}

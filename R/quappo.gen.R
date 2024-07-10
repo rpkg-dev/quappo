@@ -40,8 +40,8 @@ this_pkg <- utils::packageName()
 #' Opens a Quarto project's pre-rendered output of the specified `format` in the RStudio viewer pane or the system's default application. For `"html"`, a local
 #' HTTP server is launched that serves the HTML output on [`127.0.0.1:3456`](http://127.0.0.1:3456) by default.
 #'
-#' This is considerably faster and more responsive than [quarto::quarto_preview] (which runs Quarto in the background and automatically reloads the browser when
-#' input files or document resources (e.g. CSS) change).
+#' This is considerably faster and more responsive than [quarto::quarto_preview()] (which runs Quarto in the background and automatically reloads the browser
+#' when input files or document resources (e.g. CSS) change).
 #'
 #' @details
 #' Note that the web server started by `view_output()` will continue running in the background until it is explicitly stopped (e.g. via [httpuv::stopServer()]
@@ -195,9 +195,9 @@ view_output <- function(input = ".",
 #'   [`fig-width`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A numeric scalar, or `NULL` to omit.
 #' @param fig_height Height of the plot (in inches), to be used in the graphics device. Set as Quarto's
 #'   [`fig-height`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A numeric scalar, or `NULL` to omit.
-#' @param fig_pos LaTeX figure position arrangement to be used in `\begin{figure}[]`. Set as Quarto's
-#'   [`fig-pos`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A character scalar, or `NULL` to omit. Use `"false"` for
-#'   no figure position specifier, which is sometimes necessary with custom figure environments (such as `sidewaysfigure`).
+#' @param fig_pos LaTeX [figure position arrangement](https://quarto.org/docs/authoring/figures.html#figure-position) to be used in `\begin{figure}[]`. Set as
+#' Quarto's [`fig-pos`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. A character scalar, or `FALSE` for no figure
+#' position specifier, which is sometimes necessary with custom figure environments (such as `sidewaysfigure`), or `NULL` to omit.
 #' @param fig_link Hyperlink target for the figure. Set as Quarto's [`fig-link`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk
 #'   option. A character scalar, or `NULL` to omit.
 #' @param column Quarto [article layout class](https://quarto.org/docs/authoring/article-layout.html#available-columns) for all of the code chunk's output. Set
@@ -248,8 +248,10 @@ fig_chunk <- function(body,
   checkmate::assert_number(fig_height,
                            lower = 0.0,
                            null.ok = TRUE)
-  checkmate::assert_string(fig_pos,
-                           null.ok = TRUE)
+  if (!isFALSE(fig_pos)) {
+    checkmate::assert_string(fig_pos,
+                             null.ok = TRUE)
+  }
   checkmate::assert_string(fig_link,
                            null.ok = TRUE)
   checkmate::assert_string(out_width,

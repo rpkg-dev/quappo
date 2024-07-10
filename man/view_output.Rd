@@ -40,8 +40,8 @@ For \code{format = "html"}, a \code{\link[httpuv:WebServer]{httpuv::WebServer}} 
 Opens a Quarto project's pre-rendered output of the specified \code{format} in the RStudio viewer pane or the system's default application. For \code{"html"}, a local
 HTTP server is launched that serves the HTML output on \href{http://127.0.0.1:3456}{\verb{127.0.0.1:3456}} by default.
 
-This is considerably faster and more responsive than \link[quarto:quarto_preview]{quarto::quarto_preview} (which runs Quarto in the background and automatically reloads the browser when
-input files or document resources (e.g. CSS) change).
+This is considerably faster and more responsive than \code{\link[quarto:quarto_preview]{quarto::quarto_preview()}} (which runs Quarto in the background and automatically reloads the browser
+when input files or document resources (e.g. CSS) change).
 }
 \details{
 Note that the web server started by \code{view_output()} will continue running in the background until it is explicitly stopped (e.g. via \code{\link[httpuv:stopServer]{httpuv::stopServer()}}
