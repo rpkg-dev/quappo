@@ -65,17 +65,17 @@
 
 <dt id="arg-label">label<a class="anchor" aria-label="anchor" href="#arg-label"></a></dt>
 <dd><p>Unique code chunk label. Set as Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#tables" class="external-link"><code>label</code></a> code chunk option. A
-character scalar that starts with <code>"tbl-"</code>.</p></dd>
+character scalar that starts with <code>"tbl-"</code> and only contains letters, numbers, underscores (<code>_</code>) and dashes (<code>-</code>).</p></dd>
 
 
 <dt id="arg-tbl-cap">tbl_cap<a class="anchor" aria-label="anchor" href="#arg-tbl-cap"></a></dt>
-<dd><p>Table caption. Set as Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#tables" class="external-link"><code>tbl-cap</code></a> code chunk option. A character
-scalar.</p></dd>
+<dd><p>Table caption. Set as Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#tables" class="external-link"><code>tbl-cap</code></a> code chunk option. Either <code>NULL</code>
+to omit or a character vector.</p></dd>
 
 
 <dt id="arg-tbl-subcap">tbl_subcap<a class="anchor" aria-label="anchor" href="#arg-tbl-subcap"></a></dt>
-<dd><p>Table subcaptions. Set as Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#tables" class="external-link"><code>tbl-subcap</code></a> code chunk option. A
-character vector.</p></dd>
+<dd><p>Table subcaptions. Set as Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#tables" class="external-link"><code>tbl-subcap</code></a> code chunk option.
+Either <code>NULL</code> to omit or a character vector.</p></dd>
 
 
 <dt id="arg-tbl-colwidths">tbl_colwidths<a class="anchor" aria-label="anchor" href="#arg-tbl-colwidths"></a></dt>
@@ -88,6 +88,7 @@ widths based on the Markdown text width of cells). <code>"auto"</code> is the de
 <li><p><code>"true"</code>: Always apply Markdown table widths. <code>"true"</code> is the default for all non-HTML formats.</p></li>
 <li><p><code>"false"</code>: Never apply Markdown table widths.</p></li>
 <li><p>A numeric vector (e.g. <code>c(40, 30, 30)</code>): Array of explicit width percentages.</p></li>
+<li><p><code>NULL</code> to omit the <code>tbl-colwidths</code> chunk option.</p></li>
 </ul></dd>
 
 
@@ -179,7 +180,7 @@ as Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#pa
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
     </footer></div>

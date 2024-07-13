@@ -18,13 +18,13 @@ tbl_chunk(
 \item{body}{\R code to insert into the code chunk's body. A character scalar.}
 
 \item{label}{Unique code chunk label. Set as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#tables}{\code{label}} code chunk option. A
-character scalar that starts with \code{"tbl-"}.}
+character scalar that starts with \code{"tbl-"} and only contains letters, numbers, underscores (\verb{_}) and dashes (\code{-}).}
 
-\item{tbl_cap}{Table caption. Set as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#tables}{\code{tbl-cap}} code chunk option. A character
-scalar.}
+\item{tbl_cap}{Table caption. Set as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#tables}{\code{tbl-cap}} code chunk option. Either \code{NULL}
+to omit or a character vector.}
 
-\item{tbl_subcap}{Table subcaptions. Set as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#tables}{\code{tbl-subcap}} code chunk option. A
-character vector.}
+\item{tbl_subcap}{Table subcaptions. Set as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#tables}{\code{tbl-subcap}} code chunk option.
+Either \code{NULL} to omit or a character vector.}
 
 \item{tbl_colwidths}{Apply explicit table column widths for Markdown \href{https://pandoc.org/MANUAL.html#extension-grid_tables}{grid tables} and \href{https://pandoc.org/MANUAL.html#extension-pipe_tables}{pipe tables} that are more than \code{columns} characters wide (72 by default).
 
@@ -39,6 +39,7 @@ widths based on the Markdown text width of cells). \code{"auto"} is the default 
 \item \code{"true"}: Always apply Markdown table widths. \code{"true"} is the default for all non-HTML formats.
 \item \code{"false"}: Never apply Markdown table widths.
 \item A numeric vector (e.g. \code{c(40, 30, 30)}): Array of explicit width percentages.
+\item \code{NULL} to omit the \code{tbl-colwidths} chunk option.
 }}
 
 \item{tbl_column}{Quarto \href{https://quarto.org/docs/authoring/article-layout.html#available-columns}{article layout class} for the figure output. Set as
