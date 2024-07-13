@@ -17,11 +17,19 @@ utils::globalVariables(names = c(".",
 
 as_code_chunk_array <- function(x) {
   
+  checkmate::assert_character(x,
+                              any.missing = FALSE,
+                              null.ok = TRUE)
+  if (length(x) == 0L) {
+    return(character())
+  }
+  
   if (length(x) == 1L) {
     return(paste0("#|   - ", x))
   }
   
-  yaml::as.yaml(x) |>
+  yaml::as.yaml(x,
+                handlers = list(logical = yaml::verbatim_logical)) |>
     stringr::str_split_1("\n") %>%
     magrittr::extract(nchar(.) > 0L) %>%
     paste0("#|   ", .,
@@ -29,7 +37,10 @@ as_code_chunk_array <- function(x) {
 }
 
 as_yaml_inline <- function(x) {
-  yaml::as.yaml(x) |> stringr::str_remove(pattern = "\n$")
+  
+  yaml::as.yaml(x,
+                handlers = list(logical = yaml::verbatim_logical)) |>
+    stringr::str_remove(pattern = "\n$")
 }
 
 this_pkg <- utils::packageName()
