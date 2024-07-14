@@ -697,7 +697,7 @@ collapse_authors <- function(config = quarto::quarto_inspect()$config,
                            tibble::as_tibble) |>
                 purrr::list_rbind()) |>
     tibble::rowid_to_column() |>
-    purrr::pmap(\(rowid, name, orcid, ...) {
+    purrr::pmap(\(rowid, name, ...) {
       
       if (reverse_first && rowid == 1L) {
         
@@ -711,10 +711,14 @@ collapse_authors <- function(config = quarto::quarto_inspect()$config,
         result <- name
       }
       
-      switch(EXPR = orcid_style,
-             none = result,
-             icon = glue::glue("{result} <a href='https://orcid.org/{orcid}' target='_blank' rel='noopener'>{orcid_icon}</a>"),
-             plain = glue::glue("{result} ({orcid})"))
+      if (exists("orcid") && !is.na(orcid)) {
+        result <- switch(EXPR = orcid_style,
+                         none = result,
+                         icon = glue::glue("{result} <a href='https://orcid.org/{orcid}' target='_blank' rel='noopener'>{orcid_icon}</a>"),
+                         plain = glue::glue("{result} ({orcid})"))
+      }
+      
+      result
     }) |>
     cli::ansi_collapse(sep = sep,
                        sep2 = sep2,
