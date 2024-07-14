@@ -2,6 +2,7 @@
 
 export(chunks)
 export(fig_chunk)
+export(qmd_layout_classes)
 export(read_chunk_toml)
 export(tbl_chunk)
 export(view_output)

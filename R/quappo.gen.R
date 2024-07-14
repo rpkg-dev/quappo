@@ -592,3 +592,15 @@ read_chunk_toml <- function(path) {
     }) |>
     purrr::list_rbind()
 }
+
+#' Quarto article layout classes
+#'
+#' All possible Quarto [article layout classes](https://quarto.org/docs/authoring/article-layout.html#available-columns).
+#'
+#' @format A character vector.
+#' @family chunks
+#' @export
+#'
+#' @examples
+#' quappo::qmd_layout_classes
+"qmd_layout_classes"

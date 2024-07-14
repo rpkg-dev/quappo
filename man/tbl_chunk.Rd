@@ -109,6 +109,7 @@ quappo::tbl_chunk(body = "knitr::kable(head(cars))",
 Other code chunk functions:
 \code{\link{chunks}()},
 \code{\link{fig_chunk}()},
+\code{\link{qmd_layout_classes}},
 \code{\link{read_chunk_toml}()}
 }
 \concept{chunks}

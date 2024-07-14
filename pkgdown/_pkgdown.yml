@@ -11,3 +11,4 @@ reference:
   - tbl_chunk
   - chunks
   - read_chunk_toml
+  - qmd_layout_classes

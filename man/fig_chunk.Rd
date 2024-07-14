@@ -118,6 +118,7 @@ quappo::fig_chunk(body = "plot(cars)",
 \seealso{
 Other code chunk functions:
 \code{\link{chunks}()},
+\code{\link{qmd_layout_classes}},
 \code{\link{read_chunk_toml}()},
 \code{\link{tbl_chunk}()}
 }
