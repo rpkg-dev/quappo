@@ -630,6 +630,10 @@ collapse_authors <- function(config = quarto::quarto_inspect()$config,
   
   config$author %||%
   config$book$author |>
+    pal::when(is.data.frame(.) ~ .,
+              ~ purrr::map(.,
+                           tibble::as_tibble) |>
+                purrr::list_rbind()) |>
     tibble::rowid_to_column() |>
     purrr::pmap(\(rowid, name, orcid, ...) {
       
