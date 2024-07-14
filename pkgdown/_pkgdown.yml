@@ -11,4 +11,7 @@ reference:
   - tbl_chunk
   - chunks
   - read_chunk_toml
+- title: Metadata
+- contents:
+  - collapse_authors
   - qmd_layout_classes

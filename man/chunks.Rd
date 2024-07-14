@@ -76,7 +76,6 @@ tibble::tibble(itr_vars_r = "purrr::map(colnames(mtcars)[5:7], \\\\(x) list(v = 
 \seealso{
 Other code chunk functions:
 \code{\link{fig_chunk}()},
-\code{\link{qmd_layout_classes}},
 \code{\link{read_chunk_toml}()},
 \code{\link{tbl_chunk}()}
 }

@@ -17,11 +17,8 @@ All possible Quarto \href{https://quarto.org/docs/authoring/article-layout.html#
 quappo::qmd_layout_classes
 }
 \seealso{
-Other code chunk functions:
-\code{\link{chunks}()},
-\code{\link{fig_chunk}()},
-\code{\link{read_chunk_toml}()},
-\code{\link{tbl_chunk}()}
+Other metadata: 
+\code{\link{collapse_authors}()}
 }
-\concept{chunks}
+\concept{metadata}
 \keyword{datasets}

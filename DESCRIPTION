@@ -30,6 +30,7 @@ Imports:
     yaml (>= 2.3.8)
 Suggests: 
     clock (>= 0.7.0),
+    fontawesome (>= 0.5.2),
     rstudioapi (>= 0.16.0)
 Remotes:
     gitlab::rpkg.dev/pal

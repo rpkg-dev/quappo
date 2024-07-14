@@ -19,7 +19,6 @@ Reads in a \href{https://toml.io/en/latest}{TOML} file containing structured fig
 Other code chunk functions:
 \code{\link{chunks}()},
 \code{\link{fig_chunk}()},
-\code{\link{qmd_layout_classes}},
 \code{\link{tbl_chunk}()}
 }
 \concept{chunks}

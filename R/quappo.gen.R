@@ -593,12 +593,74 @@ read_chunk_toml <- function(path) {
     purrr::list_rbind()
 }
 
+#' Collapse Quarto authors
+#'
+#' Collapses all author names from a Quarto project or document into a single string.
+#'
+#' @inheritParams cli::ansi_collapse
+#' @param config Quarto configuration as returned by [`quarto::quarto_inspect()$config`][quarto::quarto_inspect].
+#' @param reverse_first Whether or not to reverse the first and last name from the *first* author, meaning `Jane Doe` becomes `Doe, Jane`.
+#' @param orcid_style How to include the authors' [ORCID](https://en.wikipedia.org/wiki/ORCID)s in the output. One of
+#'   - `"none"` to omit ORCIDs in the output.
+#'   - `"icon"` to include an ORCID icon (specified via `orcid_icon`) after the author name that links to the respective author's ORCID page. Suitable for HTML
+#'     output.
+#'   - `"plain"` to simply include the ORCID as plain text in parentheses after the author name.
+#' @param orcid_icon SVG icon to be used for `orcid_style = "icon"`.
+#'
+#' @return A character scalar.
+#' @family metadata
+#' @export
+#'
+#' @examples
+#' if (quarto::is_using_quarto()) {
+#'   quappo::collapse_authors()
+#' }
+collapse_authors <- function(config = quarto::quarto_inspect()$config,
+                             reverse_first = TRUE,
+                             orcid_style = c("none", "icon", "plain"),
+                             orcid_icon = fontawesome::fa(name = "orcid"),
+                             sep = ", ",
+                             sep2 = " and ",
+                             last = ", and ") {
+  
+  checkmate::assert_list(config)
+  checkmate::assert_flag(reverse_first)
+  orcid_style <- rlang::arg_match(orcid_style)
+  checkmate::assert_string(orcid_icon)
+  
+  config$author %||%
+  config$book$author |>
+    tibble::rowid_to_column() |>
+    purrr::pmap(\(rowid, name, orcid, ...) {
+      
+      if (reverse_first && rowid == 1L) {
+        
+        result <-
+          name |>
+          stringr::str_split_1(pattern = " ") |>
+          rev() |>
+          paste0(collapse = ", ")
+        
+      } else {
+        result <- name
+      }
+      
+      switch(EXPR = orcid_style,
+             none = result,
+             icon = glue::glue("{result} <a href='https://orcid.org/{orcid}' target='_blank' rel='noopener'>{orcid_icon}</a>"),
+             plain = glue::glue("{result} ({orcid})"))
+    }) |>
+    cli::ansi_collapse(sep = sep,
+                       sep2 = sep2,
+                       last = last)
+}
+
 #' Quarto article layout classes
 #'
 #' All possible Quarto [article layout classes](https://quarto.org/docs/authoring/article-layout.html#available-columns).
 #'
 #' @format A character vector.
-#' @family chunks
+#' @family metadata
 #' @export
 #'
 #' @examples
