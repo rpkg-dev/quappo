@@ -13,7 +13,8 @@
 # You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 utils::globalVariables(names = c(".",
-                                 ":="))
+                                 ":=",
+                                 "orcid"))
 
 as_code_chunk_array <- function(x) {
   
