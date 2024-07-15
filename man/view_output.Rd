@@ -14,7 +14,7 @@ view_output(
 )
 }
 \arguments{
-\item{input}{Path to \href{https://quarto.org/docs/projects/quarto-projects.html}{Quarto project} directory. A character scalar.}
+\item{input}{Path to a \href{https://quarto.org/docs/projects/quarto-projects.html}{Quarto project} directory. A character scalar.}
 
 \item{output_format}{Quarto output format to open. If \href{https://quarto.org/docs/reference/formats/html.html}{\code{"html"}}, a local HTTP server is launched
 serving the projects's HTML output under \code{host} on the specified \code{port}.}

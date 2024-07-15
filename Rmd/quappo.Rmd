@@ -92,7 +92,7 @@ NOTES:
 #' chosen using [httpuv::randomPort()].
 #'
 #' @inheritParams quarto::quarto_inspect
-#' @param input Path to [Quarto project](https://quarto.org/docs/projects/quarto-projects.html) directory. A character scalar.
+#' @param input Path to a [Quarto project](https://quarto.org/docs/projects/quarto-projects.html) directory. A character scalar.
 #' @param output_format Quarto output format to open. If [`"html"`](https://quarto.org/docs/reference/formats/html.html), a local HTTP server is launched
 #'   serving the projects's HTML output under `host` on the specified `port`.
 #' @param host IPv4 address to serve the HTML output on. A character scalar. Only relevant for `format = "html"`.
