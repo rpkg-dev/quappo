@@ -18,7 +18,8 @@ quappo::qmd_layout_classes
 }
 \seealso{
 Other metadata: 
-\code{\link{collapse_authors}()}
+\code{\link{collapse_authors}()},
+\code{\link{profiles}()}
 }
 \concept{metadata}
 \keyword{datasets}

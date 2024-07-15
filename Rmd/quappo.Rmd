@@ -727,6 +727,34 @@ collapse_authors <- function(config = quarto::quarto_inspect()$config,
 }
 ```
 
+### `profiles`
+
+```{r}
+#' List Quarto project profiles
+#'
+#' Lists all [Quarto project profiles](https://quarto.org/docs/projects/profiles.html) under the specified `input` path.
+#'
+#' @inheritParams view_output
+#'
+#' @return A character vector.
+#' @family metadata
+#' @export
+#'
+#' @examples
+#' if (quarto::is_using_quarto()) {
+#'   quappo::profiles()
+#' }
+profiles <- function(input = ".") {
+  
+  fs::dir_ls(path = input,
+             type = "file",
+             regexp = "(^|/)_quarto-.+\\.yml$") |>
+  fs::path_file() |>
+  stringr::str_extract(pattern = "^_quarto-(.+)\\.yml$",
+                       group = 1L)
+}
+```
+
 ### `qmd_layout_classes`
 
 ```{r}
