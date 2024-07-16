@@ -717,7 +717,7 @@ collapse_authors <- function(config = quarto::quarto_inspect()$config,
         result <- switch(EXPR = orcid_style,
                          none = result,
                          icon = glue::glue("{result} <a href='https://orcid.org/{args$orcid}' target='_blank' rel='noopener'>{orcid_icon}</a>"),
-                         plain = glue::glue("{result} ({args$orcid})"))
+                         plain = glue::glue("{result} (ORCID: {args$orcid})"))
       }
       
       result
