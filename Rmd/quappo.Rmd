@@ -731,11 +731,12 @@ collapse_authors <- function(config = quarto::quarto_inspect()$config,
 ### `cur_profiles`
 
 ```{r}
-#' Get current Quarto profile(s)
+#' Get active Quarto project profile(s)
 #'
-#' Returns the currently active Quarto profile(s). Wrapper around `Sys.getenv("QUARTO_PROFILE")` that returns `NULL` when Quarto is not rendering.
+#' Returns the currently active Quarto project profile(s). Wrapper around
+#' [`Sys.getenv("QUARTO_PROFILE")`](https://quarto.org/docs/projects/profiles.html#overview) that returns `NULL` when Quarto is not rendering.
 #'
-#' @return `NULL` when Quarto is not rendering, otherwise a character vector of the active Quarto profiles.
+#' @return `NULL` when Quarto is not rendering or no Quarto project profiles are active, otherwise a character vector.
 #' @family metadata
 #' @export
 #'
@@ -745,9 +746,10 @@ cur_profiles <- function() {
   
   result <-
     Sys.getenv("QUARTO_PROFILE") |>
-    stringr::str_split_1(pattern = ",")
+    stringr::str_split_1(pattern = ",") |>
+    setdiff("")
   
-  if (result == "") {
+  if (length(result) == 0L) {
     result <- NULL
   }
   
