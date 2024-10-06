@@ -665,6 +665,27 @@ collapse_authors <- function(config = quarto::quarto_inspect()$config,
                        last = last)
 }
 
+#' Get current Quarto profile
+#'
+#' Returns the currently active Quarto profile. Wrapper around `Sys.getenv("QUARTO_PROFILE")` that returns `NULL` when Quarto is not rendering.
+#'
+#' @return `NULL` when Quarto is not rendering, otherwise a character scalar.
+#' @family metadata
+#' @export
+#'
+#' @examples
+#' quappo::profile()
+profile <- function() {
+  
+  result <- Sys.getenv("QUARTO_PROFILE")
+  
+  if (result == "") {
+    result <- NULL
+  }
+  
+  result
+}
+
 #' List Quarto project profiles
 #'
 #' Lists all [Quarto project profiles](https://quarto.org/docs/projects/profiles.html) under the specified `input` path.

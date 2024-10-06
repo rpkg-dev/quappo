@@ -3,6 +3,7 @@
 export(chunks)
 export(collapse_authors)
 export(fig_chunk)
+export(profile)
 export(profiles)
 export(qmd_layout_classes)
 export(read_chunk_toml)
