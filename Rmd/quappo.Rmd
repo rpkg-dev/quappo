@@ -762,7 +762,7 @@ cur_profiles <- function() {
 ```{r}
 #' List Quarto project profiles
 #'
-#' Lists all [Quarto project profiles](https://quarto.org/docs/projects/profiles.html) under the specified `input` path.
+#' Returns all [profiles](https://quarto.org/docs/projects/profiles.html) of a Quarto project.
 #'
 #' @inheritParams view_output
 #'
