@@ -785,6 +785,47 @@ profiles <- function(input = ".") {
 }
 ```
 
+### `default_profiles`
+
+```{r}
+#' Get default Quarto project profile(s)
+#'
+#' Returns a Quarto project's [default profile(s)](https://quarto.org/docs/projects/profiles.html#default-profile). 
+#'
+#' @inheritParams view_output
+#'
+#' @return `NULL` if no default Quarto project profiles are configured, otherwise a character vector.
+#' @family metadata
+#' @export
+#'
+#' @examples
+#' if (quarto::is_using_quarto()) {
+#'   quappo::default_profiles()
+#' }
+default_profiles <- function(input = ".") {
+  
+  profile_config <-
+    quarto::quarto_inspect(input = input,
+                           profile = NULL) |>
+    purrr::pluck("config", "profile")
+  
+  # 1st prio: `profile.default`
+  result <- profile_config$default %||% 
+  
+  # 2nd prio: first `profile.group`
+  if (is.null(result)) {
+    result <- purrr::map_chr(profile_config$group,
+                             dplyr::first)
+    
+    if (length(result) == 0L) {
+      result <- NULL
+    }
+  }
+  
+  result
+}
+```
+
 ### `qmd_layout_classes`
 
 ```{r}
