@@ -23,7 +23,7 @@ if (quarto::is_using_quarto()) {
 \seealso{
 Other metadata: 
 \code{\link{collapse_authors}()},
-\code{\link{profile}()},
+\code{\link{cur_profiles}()},
 \code{\link{qmd_layout_classes}}
 }
 \concept{metadata}
