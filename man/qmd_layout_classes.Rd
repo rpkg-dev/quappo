@@ -19,6 +19,7 @@ quappo::qmd_layout_classes
 \seealso{
 Other metadata: 
 \code{\link{collapse_authors}()},
+\code{\link{profile}()},
 \code{\link{profiles}()}
 }
 \concept{metadata}

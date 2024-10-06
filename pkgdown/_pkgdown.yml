@@ -14,5 +14,6 @@ reference:
 - title: Metadata
 - contents:
   - collapse_authors
+  - profile
   - profiles
   - qmd_layout_classes
