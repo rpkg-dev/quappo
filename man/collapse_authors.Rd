@@ -51,6 +51,7 @@ if (quarto::is_using_quarto()) {
 \seealso{
 Other metadata: 
 \code{\link{cur_profiles}()},
+\code{\link{default_profiles}()},
 \code{\link{profiles}()},
 \code{\link{qmd_layout_classes}}
 }

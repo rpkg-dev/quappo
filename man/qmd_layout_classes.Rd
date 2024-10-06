@@ -20,6 +20,7 @@ quappo::qmd_layout_classes
 Other metadata: 
 \code{\link{collapse_authors}()},
 \code{\link{cur_profiles}()},
+\code{\link{default_profiles}()},
 \code{\link{profiles}()}
 }
 \concept{metadata}

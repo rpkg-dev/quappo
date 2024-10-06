@@ -16,4 +16,5 @@ reference:
   - collapse_authors
   - cur_profiles
   - profiles
+  - default_profiles
   - qmd_layout_classes

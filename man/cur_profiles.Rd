@@ -2,15 +2,16 @@
 % Please edit documentation in R/quappo.gen.R
 \name{cur_profiles}
 \alias{cur_profiles}
-\title{Get current Quarto profile(s)}
+\title{Get active Quarto project profile(s)}
 \usage{
 cur_profiles()
 }
 \value{
-\code{NULL} when Quarto is not rendering, otherwise a character vector of the active Quarto profiles.
+\code{NULL} when Quarto is not rendering or no Quarto project profiles are active, otherwise a character vector.
 }
 \description{
-Returns the currently active Quarto profile(s). Wrapper around \code{Sys.getenv("QUARTO_PROFILE")} that returns \code{NULL} when Quarto is not rendering.
+Returns the currently active Quarto project profile(s). Wrapper around
+\href{https://quarto.org/docs/projects/profiles.html#overview}{\code{Sys.getenv("QUARTO_PROFILE")}} that returns \code{NULL} when Quarto is not rendering.
 }
 \examples{
 quappo::cur_profiles()
@@ -18,6 +19,7 @@ quappo::cur_profiles()
 \seealso{
 Other metadata: 
 \code{\link{collapse_authors}()},
+\code{\link{default_profiles}()},
 \code{\link{profiles}()},
 \code{\link{qmd_layout_classes}}
 }

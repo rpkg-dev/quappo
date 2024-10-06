@@ -665,11 +665,12 @@ collapse_authors <- function(config = quarto::quarto_inspect()$config,
                        last = last)
 }
 
-#' Get current Quarto profile(s)
+#' Get active Quarto project profile(s)
 #'
-#' Returns the currently active Quarto profile(s). Wrapper around `Sys.getenv("QUARTO_PROFILE")` that returns `NULL` when Quarto is not rendering.
+#' Returns the currently active Quarto project profile(s). Wrapper around
+#' [`Sys.getenv("QUARTO_PROFILE")`](https://quarto.org/docs/projects/profiles.html#overview) that returns `NULL` when Quarto is not rendering.
 #'
-#' @return `NULL` when Quarto is not rendering, otherwise a character vector of the active Quarto profiles.
+#' @return `NULL` when Quarto is not rendering or no Quarto project profiles are active, otherwise a character vector.
 #' @family metadata
 #' @export
 #'
@@ -679,9 +680,10 @@ cur_profiles <- function() {
   
   result <-
     Sys.getenv("QUARTO_PROFILE") |>
-    stringr::str_split_1(pattern = ",")
+    stringr::str_split_1(pattern = ",") |>
+    setdiff("")
   
-  if (result == "") {
+  if (length(result) == 0L) {
     result <- NULL
   }
   
@@ -690,7 +692,7 @@ cur_profiles <- function() {
 
 #' List Quarto project profiles
 #'
-#' Lists all [Quarto project profiles](https://quarto.org/docs/projects/profiles.html) under the specified `input` path.
+#' Returns all [profiles](https://quarto.org/docs/projects/profiles.html) of a Quarto project.
 #'
 #' @inheritParams view_output
 #'
@@ -710,6 +712,43 @@ profiles <- function(input = ".") {
   fs::path_file() |>
   stringr::str_extract(pattern = "^_quarto-(.+)\\.yml$",
                        group = 1L)
+}
+
+#' Get default Quarto project profile(s)
+#'
+#' Returns a Quarto project's [default profile(s)](https://quarto.org/docs/projects/profiles.html#default-profile). 
+#'
+#' @inheritParams view_output
+#'
+#' @return `NULL` if no default Quarto project profiles are configured, otherwise a character vector.
+#' @family metadata
+#' @export
+#'
+#' @examples
+#' if (quarto::is_using_quarto()) {
+#'   quappo::default_profiles()
+#' }
+default_profiles <- function(input = ".") {
+  
+  profile_config <-
+    quarto::quarto_inspect(input = input,
+                           profile = NULL) |>
+    purrr::pluck("config", "profile")
+  
+  # 1st prio: `profile.default`
+  result <- profile_config$default %||% 
+  
+  # 2nd prio: first `profile.group`
+  if (is.null(result)) {
+    result <- purrr::map_chr(profile_config$group,
+                             dplyr::first)
+    
+    if (length(result) == 0L) {
+      result <- NULL
+    }
+  }
+  
+  result
 }
 
 #' Quarto article layout classes
