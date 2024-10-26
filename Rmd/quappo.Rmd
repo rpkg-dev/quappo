@@ -805,21 +805,17 @@ profiles <- function(input = ".") {
 default_profiles <- function(input = ".") {
   
   profile_config <-
-    quarto::quarto_inspect(input = input,
-                           profile = NULL) |>
-    purrr::pluck("config", "profile")
+    fs::path(input, "_quarto.yml") |>
+    # NOTE: we avoid default YAML sequence simplification, cf. https://github.com/vubiostat/r-yaml/issues/69
+    yaml::read_yaml(handlers = list(seq = \(x) x)) |>
+    purrr::pluck("profile")
   
   # 1st prio: `profile.default`
-  result <- profile_config$default %||% 
-  
   # 2nd prio: first `profile.group`
-  if (is.null(result)) {
-    result <- purrr::map_chr(profile_config$group,
-                             dplyr::first)
-    
-    if (length(result) == 0L) {
-      result <- NULL
-    }
+  result <- profile_config$default %||% purrr::map_chr(profile_config$group,
+                                                       dplyr::first)
+  if (length(result) == 0L) {
+    result <- NULL
   }
   
   result
