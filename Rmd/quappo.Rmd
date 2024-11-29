@@ -215,6 +215,22 @@ view_output <- function(input = ".",
 
 ## `render_partly`
 
+TODO:
+
+-   Submit upstream PR to adapt `quarto::quarto_render()` to check for `is.null()` instead of
+    [`missing()`](https://github.com/quarto-dev/quarto-r/blob/0fcb998247fb8f33d1b54b6b8c7841ed473300e9/R/render.R) to be able to properly forward all possibly
+    relevant args.
+
+    Currently not forwarded:
+
+    -   `execute_params`
+    -   `execute_dir`
+    -   `execute_daemon`
+    -   `execute_debug`
+    -   `cache`
+    -   `metadata`
+    -   `metadata_file`
+
 ```{r}
 #' Render Quarto book partly
 #'
@@ -241,16 +257,10 @@ render_partly <- function(path = rstudioapi::getActiveDocumentContext()$path,
                           profile = default_profiles(),
                           output_format = NULL,
                           execute = TRUE,
-                          execute_params = NULL,
-                          execute_dir = NULL,
-                          execute_daemon = NULL,
                           execute_daemon_restart = FALSE,
                           execute_debug = FALSE,
                           use_freezer = FALSE,
-                          cache = NULL,
                           cache_refresh = FALSE,
-                          metadata = NULL,
-                          metadata_file = NULL,
                           debug = FALSE,
                           quiet = FALSE,
                           pandoc_args = NULL,
@@ -265,16 +275,10 @@ render_partly <- function(path = rstudioapi::getActiveDocumentContext()$path,
   quarto::quarto_render(input = path,
                         output_format = output_format,
                         execute = execute,
-                        execute_params = execute_params,
-                        execute_dir = execute_dir,
-                        execute_daemon = execute_daemon,
                         execute_daemon_restart = execute_daemon_restart,
                         execute_debug = execute_debug,
                         use_freezer = use_freezer,
-                        cache = cache,
                         cache_refresh = cache_refresh,
-                        metadata = metadata,
-                        metadata_file = metadata_file,
                         debug = debug,
                         quiet = quiet,
                         profile = profile,

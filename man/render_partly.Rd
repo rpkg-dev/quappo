@@ -9,16 +9,10 @@ render_partly(
   profile = default_profiles(),
   output_format = NULL,
   execute = TRUE,
-  execute_params = NULL,
-  execute_dir = NULL,
-  execute_daemon = NULL,
   execute_daemon_restart = FALSE,
   execute_debug = FALSE,
   use_freezer = FALSE,
-  cache = NULL,
   cache_refresh = FALSE,
-  metadata = NULL,
-  metadata_file = NULL,
   debug = FALSE,
   quiet = FALSE,
   pandoc_args = NULL,
@@ -39,16 +33,6 @@ a character vector of profile names or \code{NULL} to use the default profile.}
 
 \item{execute}{Whether to execute embedded code chunks.}
 
-\item{execute_params}{A list of named parameters that override custom params
-specified within the YAML front-matter.}
-
-\item{execute_dir}{The working directory in which to execute embedded code
-chunks.}
-
-\item{execute_daemon}{Keep Jupyter kernel alive (defaults to 300 seconds).
-Note this option is only applicable for rendering Jupyter notebooks or
-Jupyter markdown.}
-
 \item{execute_daemon_restart}{Restart keepalive Jupyter kernel before render.
 Note this option is only applicable for rendering Jupyter notebooks or
 Jupyter markdown.}
@@ -58,19 +42,7 @@ Jupyter markdown.}
 \item{use_freezer}{Force use of frozen computations for an incremental
 file render.}
 
-\item{cache}{Cache execution output (uses knitr cache and jupyter-cache
-respectively for Rmd and Jupyter input files).}
-
 \item{cache_refresh}{Force refresh of execution cache.}
-
-\item{metadata}{An optional named list used to override YAML
-metadata. It will be passed as a YAML file to \code{--metadata-file} CLI flag.
-This will be merged over \code{metadata-file} options if both are
-specified.}
-
-\item{metadata_file}{A yaml file passed to \code{--metadata-file} CLI flags to
-override metadata. This will be merged with \code{metadata} if both are
-specified, with low precedence on \code{metadata} options.}
 
 \item{debug}{Leave intermediate files in place after render.}
 
