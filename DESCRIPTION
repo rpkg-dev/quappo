@@ -24,6 +24,7 @@ Imports:
     purrr (>= 1.0.2),
     quarto (>= 1.4.1),
     rlang (>= 1.1.4),
+    rstudioapi (>= 0.17.1),
     stringr (>= 1.5.1),
     tibble (>= 3.2.1),
     utils,
@@ -32,7 +33,6 @@ Imports:
 Suggests: 
     clock (>= 0.7.0),
     fontawesome (>= 0.5.2),
-    rstudioapi (>= 0.16.0),
     testthat (>= 3.0.0)
 Remotes:
     gitlab::rpkg.dev/pal

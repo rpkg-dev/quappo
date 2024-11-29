@@ -1,0 +1,4 @@
+Name: Render Quarto book partly
+Description: Executes `quappo::render_partly()`.
+Binding: render_partly
+Interactive: true

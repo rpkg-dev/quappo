@@ -213,6 +213,77 @@ view_output <- function(input = ".",
 }
 ```
 
+## `render_partly`
+
+```{r}
+#' Render Quarto book partly
+#'
+#' Renders a file (["chapter"](https://quarto.org/docs/books/book-structure.html#overview)) or subdirectory
+#' (["part"](https://quarto.org/docs/books/book-structure.html#parts-appendices)) of a [Quarto book](https://quarto.org/docs/reference/projects/books.html)
+#' project to the specified `profile`. Convenience wrapper around [quarto::quarto_render()], which by default renders the file that is *currently active in
+#' RStudio*.
+#'
+#' `r pkgsnip::md_snip("rstudio_addin_hint")`
+#'
+#' @inheritParams quarto::quarto_render
+#' @param path Path to a file (["chapter"](https://quarto.org/docs/books/book-structure.html#overview)) or subdirectory
+#'   (["part"](https://quarto.org/docs/books/book-structure.html#parts-appendices)) of a [Quarto book](https://quarto.org/docs/reference/projects/books.html)
+#'   project.
+#'
+#' @return `path`, invisibly.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' # only works from inside a Quarto project
+#' quappo::render_partly()}
+render_partly <- function(path = rstudioapi::getActiveDocumentContext()$path,
+                          profile = default_profiles(),
+                          output_format = NULL,
+                          execute = TRUE,
+                          execute_params = NULL,
+                          execute_dir = NULL,
+                          execute_daemon = NULL,
+                          execute_daemon_restart = FALSE,
+                          execute_debug = FALSE,
+                          use_freezer = FALSE,
+                          cache = NULL,
+                          cache_refresh = FALSE,
+                          metadata = NULL,
+                          metadata_file = NULL,
+                          debug = FALSE,
+                          quiet = FALSE,
+                          pandoc_args = NULL,
+                          as_job = getOption("quarto.render_as_job",
+                                             default = interactive() && rstudioapi::isAvailable())) {
+  if (!is.null(profile)) {
+    profile <- rlang::arg_match(profile,
+                                values = profiles(),
+                                multiple = TRUE)
+  }
+  
+  quarto::quarto_render(input = path,
+                        output_format = output_format,
+                        execute = execute,
+                        execute_params = execute_params,
+                        execute_dir = execute_dir,
+                        execute_daemon = execute_daemon,
+                        execute_daemon_restart = execute_daemon_restart,
+                        execute_debug = execute_debug,
+                        use_freezer = use_freezer,
+                        cache = cache,
+                        cache_refresh = cache_refresh,
+                        metadata = metadata,
+                        metadata_file = metadata_file,
+                        debug = debug,
+                        quiet = quiet,
+                        profile = profile,
+                        pandoc_args = pandoc_args,
+                        as_job = as_job)
+  invisible(path)
+}
+```
+
 ## Code chunks
 
 ### DESCRIPTION
