@@ -7,7 +7,7 @@
 render_partly(
   path = rstudioapi::getActiveDocumentContext()$path,
   profile = default_profiles(),
-  output_format = NULL,
+  output_format = "html",
   execute = TRUE,
   execute_daemon_restart = FALSE,
   execute_debug = FALSE,
@@ -63,6 +63,9 @@ Renders a file (\href{https://quarto.org/docs/books/book-structure.html#overview
 (\href{https://quarto.org/docs/books/book-structure.html#parts-appendices}{"part"}) of a \href{https://quarto.org/docs/reference/projects/books.html}{Quarto book}
 project to the specified \code{profile}. Convenience wrapper around \code{\link[quarto:quarto_render]{quarto::quarto_render()}}, which by default renders the file that is \emph{currently active in
 RStudio}.
+
+Note that this function is not very useful for \code{output_format = "pdf"} because Quarto can only build the whole PDF at once, not individual pages only, hence
+no partial rendering is possible.
 }
 \details{
 This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in}, allowing RStudio users to assign a \href{https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE}{custom shortcut} to it and to invoke it from the \href{https://www.rstudio.com/blog/rstudio-1-4-a-quick-tour/#command-palette--shortcuts}{command palette}.

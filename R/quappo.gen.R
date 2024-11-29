@@ -184,11 +184,17 @@ view_output <- function(input = ".",
 
 #' Render Quarto book partly
 #'
+#' @description
 #' Renders a file (["chapter"](https://quarto.org/docs/books/book-structure.html#overview)) or subdirectory
 #' (["part"](https://quarto.org/docs/books/book-structure.html#parts-appendices)) of a [Quarto book](https://quarto.org/docs/reference/projects/books.html)
 #' project to the specified `profile`. Convenience wrapper around [quarto::quarto_render()], which by default renders the file that is *currently active in
 #' RStudio*.
+#' 
+#' Note that this function is not very useful for `output_format = "pdf"` because Quarto can only build the whole PDF at once, not individual pages only, hence
+#' no partial rendering is possible.
+#' 
 #'
+#' @details
 #' `r pkgsnip::md_snip("rstudio_addin_hint")`
 #'
 #' @inheritParams quarto::quarto_render
@@ -205,7 +211,7 @@ view_output <- function(input = ".",
 #' quappo::render_partly()}
 render_partly <- function(path = rstudioapi::getActiveDocumentContext()$path,
                           profile = default_profiles(),
-                          output_format = NULL,
+                          output_format = "html",
                           execute = TRUE,
                           execute_daemon_restart = FALSE,
                           execute_debug = FALSE,
