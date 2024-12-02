@@ -1,4 +1,4 @@
-Name: Render Quarto book partly
+Name: Render Quarto book partly to HTML
 Description: Executes `quappo::render_partly()`.
 Binding: render_partly
 Interactive: true
