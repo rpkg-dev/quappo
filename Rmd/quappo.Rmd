@@ -242,10 +242,11 @@ TODO:
 #' 
 #' Note that this function is not very useful for `output_format = "pdf"` because Quarto can only build the whole PDF at once, not individual pages only, hence
 #' no partial rendering is possible.
-#' 
 #'
 #' @details
-#' `r pkgsnip::md_snip("rstudio_addin_hint")`
+#' `r pkgsnip::md_snip("rstudio_addin_hint")` Note that the default `path = rstudioapi::getActiveDocumentContext()$path` does only work when called via a
+#' keyboard shortcut, not when called from the command palette. This is because the command palette steals focus and in consequence the document underneath is
+#' not considered *currently active* anymore as long as the command palette is opened.
 #'
 #' @inheritParams quarto::quarto_render
 #' @param path Path to a file (["chapter"](https://quarto.org/docs/books/book-structure.html#overview)) or subdirectory

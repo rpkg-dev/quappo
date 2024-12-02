@@ -68,7 +68,9 @@ Note that this function is not very useful for \code{output_format = "pdf"} beca
 no partial rendering is possible.
 }
 \details{
-This function is also registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in}, allowing RStudio users to assign a \href{https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE}{custom shortcut} to it and to invoke it from the \href{https://www.rstudio.com/blog/rstudio-1-4-a-quick-tour/#command-palette--shortcuts}{command palette}.
+This function is registered as an \href{https://rstudio.github.io/rstudioaddins/}{RStudio add-in}, allowing RStudio users to assign a \href{https://support.rstudio.com/hc/en-us/articles/206382178-Customizing-Keyboard-Shortcuts-in-the-RStudio-IDE}{custom shortcut} to it and to invoke it from the \href{https://www.rstudio.com/blog/rstudio-1-4-a-quick-tour/#command-palette--shortcuts}{command palette}. Note that the default \code{path = rstudioapi::getActiveDocumentContext()$path} does only work when called via a
+keyboard shortcut, not when called from the command palette. This is because the command palette steals focus and in consequence the document underneath is
+not considered \emph{currently active} anymore as long as the command palette is opened.
 }
 \examples{
 \dontrun{
