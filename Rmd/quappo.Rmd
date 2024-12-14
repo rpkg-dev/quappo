@@ -244,7 +244,7 @@ TODO:
 #' no partial rendering is possible.
 #'
 #' @details
-#' `r pkgsnip::md_snip("rstudio_addin_hint")` Note that the default `path = rstudioapi::getActiveDocumentContext()$path` does only work when called via a
+#' `r pkgsnip::md_snip("rstudio_addin")` Note that the default `path = rstudioapi::getActiveDocumentContext()$path` does only work when called via a
 #' keyboard shortcut, not when called from the command palette. This is because the command palette steals focus and in consequence the document underneath is
 #' not considered *currently active* anymore as long as the command palette is opened.
 #'
