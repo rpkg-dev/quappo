@@ -49,12 +49,16 @@
 <span>  <span class="va">label</span>,</span>
 <span>  fig_cap <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fig_subcap <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  fig_cap_location <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fig_column <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fig_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fig_height <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  fig_pos <span class="op">=</span> <span class="st">"H"</span>,</span>
 <span>  fig_link <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  column <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  layout_ncol <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  layout_nrow <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  layout <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  out_width <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  out_height <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -83,6 +87,12 @@ to omit or a character vector.</p></dd>
 Either <code>NULL</code> to omit or a character vector.</p></dd>
 
 
+<dt id="arg-fig-cap-location">fig_cap_location<a class="anchor" aria-label="anchor" href="#arg-fig-cap-location"></a></dt>
+<dd><p>Location to place figure captions. Set as Quarto's
+<a href="https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns" class="external-link"><code>fig-cap-location</code></a> code chunk option. Either <code>NULL</code> to omit or one of
+<code>"top"</code>, <code>"bottom"</code> or <code>"margin"</code>.</p></dd>
+
+
 <dt id="arg-fig-column">fig_column<a class="anchor" aria-label="anchor" href="#arg-fig-column"></a></dt>
 <dd><p>Quarto <a href="https://quarto.org/docs/authoring/article-layout.html#available-columns" class="external-link">article layout class</a> for the figure output. Set as
 Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns" class="external-link"><code>fig-column</code></a> code chunk option. Either <code>NULL</code> to omit or one of</p><ul><li><p><code>"body"</code></p></li>
@@ -92,6 +102,7 @@ Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#page-
 <li><p><code>"page"</code></p></li>
 <li><p><code>"page-left"</code></p></li>
 <li><p><code>"page-right"</code></p></li>
+<li><p><code>"page-inset"</code></p></li>
 <li><p><code>"page-inset-left"</code></p></li>
 <li><p><code>"page-inset-right"</code></p></li>
 <li><p><code>"screen"</code></p></li>
@@ -135,6 +146,7 @@ as Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#pa
 <li><p><code>"page"</code></p></li>
 <li><p><code>"page-left"</code></p></li>
 <li><p><code>"page-right"</code></p></li>
+<li><p><code>"page-inset"</code></p></li>
 <li><p><code>"page-inset-left"</code></p></li>
 <li><p><code>"page-inset-right"</code></p></li>
 <li><p><code>"screen"</code></p></li>
@@ -146,6 +158,24 @@ as Quarto's <a href="https://quarto.org/docs/reference/cells/cells-knitr.html#pa
 <li><p><code>"screen-inset-right"</code></p></li>
 <li><p><code>"margin"</code></p></li>
 </ul></dd>
+
+
+<dt id="arg-layout-ncol">layout_ncol<a class="anchor" aria-label="anchor" href="#arg-layout-ncol"></a></dt>
+<dd><p>Number of columns to arrange the chunk output in. Set as Quarto's
+<a href="https://quarto.org/docs/reference/cells/cells-knitr.html#panel-layout" class="external-link"><code>layout-ncol</code></a> code chunk option. Either <code>NULL</code> to omit or a positive integerish
+number.</p></dd>
+
+
+<dt id="arg-layout-nrow">layout_nrow<a class="anchor" aria-label="anchor" href="#arg-layout-nrow"></a></dt>
+<dd><p>Number of rows to arrange the chunk output in. Set as Quarto's
+<a href="https://quarto.org/docs/reference/cells/cells-knitr.html#panel-layout" class="external-link"><code>layout-nrow</code></a> code chunk option. Either <code>NULL</code> to omit or a positive integerish
+number.</p></dd>
+
+
+<dt id="arg-layout">layout<a class="anchor" aria-label="anchor" href="#arg-layout"></a></dt>
+<dd><p><a href="https://quarto.org/docs/authoring/figures.html#complex-layouts" class="external-link">Custom layout</a> proportions. Set as Quarto's
+<a href="https://quarto.org/docs/reference/cells/cells-knitr.html#panel-layout" class="external-link"><code>layout</code></a> code chunk option. A list of numeric vectors where each vector defines
+the column proportions of a row. Note that the numbers in a row are arbitrary and don’t need to add up to a particular total.</p></dd>
 
 
 <dt id="arg-out-width">out_width<a class="anchor" aria-label="anchor" href="#arg-out-width"></a></dt>

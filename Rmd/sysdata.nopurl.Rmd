@@ -18,6 +18,25 @@ editor_options:
 
 # Define data
 
+## `chunk_opts`
+
+```{r}
+chunk_opts <-
+  c("src/resources/schema/cell-pagelayout.yml",
+    "src/resources/schema/cell-layout.yml") |>
+  purrr::map(\(path) {
+    
+    yay::gh_text_file(path = path,
+                      owner = "quarto-dev",
+                      name = "quarto-cli") |>
+      yaml::read_yaml(text = _) %>%
+      magrittr::set_names(value = purrr::map_chr(., \(x) x$name)) |>
+      purrr::map(\(x) purrr::pluck(x, "schema", "enum")) |>
+      purrr::compact()
+  }) |>
+  purrr::list_flatten()
+```
+
 ## `qmd_layout_classes`
 
 ```{r}
@@ -36,7 +55,8 @@ Save all the small data objects as a single internal file `R/sysdata.rda`. Note 
 to package users.
 
 ```{r}
-usethis::use_data(qmd_layout_classes,
+usethis::use_data(chunk_opts,
+                  qmd_layout_classes,
                   internal = TRUE,
                   overwrite = TRUE,
                   compress = "xz",

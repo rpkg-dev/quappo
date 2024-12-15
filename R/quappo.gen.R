@@ -12,40 +12,6 @@
 # 
 # You should have received a copy of the GNU Affero General Public License along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-utils::globalVariables(names = c(".",
-                                 ":=",
-                                 "orcid"))
-
-as_code_chunk_array <- function(x) {
-  
-  checkmate::assert_character(x,
-                              any.missing = FALSE,
-                              null.ok = TRUE)
-  if (length(x) == 0L) {
-    return(character())
-  }
-  
-  if (length(x) == 1L) {
-    return(paste0("#|   - ", x))
-  }
-  
-  yaml::as.yaml(x,
-                handlers = list(logical = yaml::verbatim_logical)) |>
-    stringr::str_split_1("\n") %>%
-    magrittr::extract(nchar(.) > 0L) %>%
-    paste0("#|   ", .,
-           collapse = "\n")
-}
-
-as_yaml_inline <- function(x) {
-  
-  yaml::as.yaml(x,
-                handlers = list(logical = yaml::verbatim_logical)) |>
-    stringr::str_remove(pattern = "\n$")
-}
-
-this_pkg <- utils::packageName()
-
 #' View Quarto output
 #'
 #' @description
@@ -262,6 +228,9 @@ render_partly <- function(path = rstudioapi::getActiveDocumentContext()$path,
 #'   to omit or a character vector.
 #' @param fig_subcap Figure subcaptions. Set as Quarto's [`fig-subcap`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option.
 #'   Either `NULL` to omit or a character vector.
+#' @param fig_cap_location Location to place figure captions. Set as Quarto's
+#'   [`fig-cap-location`](https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns) code chunk option. Either `NULL` to omit or one of
+#'   `r chunk_opts$"fig-cap-location" |> pal::as_md_vals() |> pal::enum_str(sep2 = " or ")`.
 #' @param fig_column Quarto [article layout class](https://quarto.org/docs/authoring/article-layout.html#available-columns) for the figure output. Set as
 #'   Quarto's [`fig-column`](https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns) code chunk option. Either `NULL` to omit or one of
 #'   `r pal::as_md_val_list(qmd_layout_classes)`
@@ -277,6 +246,15 @@ render_partly <- function(path = rstudioapi::getActiveDocumentContext()$path,
 #' @param column Quarto [article layout class](https://quarto.org/docs/authoring/article-layout.html#available-columns) for all of the code chunk's output. Set
 #'   as Quarto's [`column`](https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns) code chunk option. Either `NULL` to omit or one of
 #'   `r pal::as_md_val_list(qmd_layout_classes)`
+#' @param layout_ncol Number of columns to arrange the chunk output in. Set as Quarto's
+#'   [`layout-ncol`](https://quarto.org/docs/reference/cells/cells-knitr.html#panel-layout) code chunk option. Either `NULL` to omit or a positive integerish
+#'   number.
+#' @param layout_nrow Number of rows to arrange the chunk output in. Set as Quarto's
+#'   [`layout-nrow`](https://quarto.org/docs/reference/cells/cells-knitr.html#panel-layout) code chunk option. Either `NULL` to omit or a positive integerish
+#'   number.
+#' @param layout [Custom layout](https://quarto.org/docs/authoring/figures.html#complex-layouts) proportions. Set as Quarto's
+#'   [`layout`](https://quarto.org/docs/reference/cells/cells-knitr.html#panel-layout) code chunk option. A list of numeric vectors where each vector defines
+#'   the column proportions of a row. Note that the numbers in a row are arbitrary and don’t need to add up to a particular total.
 #' @param out_width Width of the plot in the output document, which can be different from its physical `fig_width`, i.e., plots can be scaled in the output
 #'   document. Set as Quarto's [`out-width`](https://quarto.org/docs/reference/cells/cells-knitr.html#figures) code chunk option. Either `NULL` to omit or a
 #'   character scalar.
@@ -297,18 +275,26 @@ fig_chunk <- function(body,
                       label,
                       fig_cap = NULL,
                       fig_subcap = NULL,
+                      fig_cap_location = NULL,
                       fig_column = NULL,
                       fig_width = NULL,
                       fig_height = NULL,
                       fig_pos = "H",
                       fig_link = NULL,
                       column = NULL,
+                      layout_ncol = NULL,
+                      layout_nrow = NULL,
+                      layout = NULL,
                       out_width = NULL,
                       out_height = NULL) {
   
   checkmate::assert_string(body)
   checkmate::assert_string(label,
                            pattern = "^fig-(\\w|-)+$")
+  if (!is.null(fig_cap_location)) {
+    fig_cap_location <- rlang::arg_match(fig_cap_location,
+                                         values = chunk_opts$`fig-cap-location`)
+  }
   checkmate::assert_number(fig_width,
                            lower = 0.0,
                            null.ok = TRUE)
@@ -333,20 +319,36 @@ fig_chunk <- function(body,
     column <- rlang::arg_match(arg = column,
                                values = qmd_layout_classes)
   }
+  checkmate::assert_count(layout_ncol,
+                          positive = TRUE,
+                          null.ok = TRUE)
+  checkmate::assert_count(layout_nrow,
+                          positive = TRUE,
+                          null.ok = TRUE)
+  checkmate::assert_list(layout,
+                         types = "numeric",
+                         any.missing = FALSE,
+                         min.len = 1L,
+                         null.ok = TRUE)
   
   # assemble code chunk
   glue::glue(paste0(c("```{{r}}",
                       "#| label: {label}",
                       "#| fig-cap:"[length(fig_cap) > 0L],
-                      as_code_chunk_array(fig_cap),
+                      as_code_chunk_chr_array(fig_cap),
                       "#| fig-subcap:"[length(fig_subcap) > 0L],
-                      as_code_chunk_array(fig_subcap),
+                      as_code_chunk_chr_array(fig_subcap),
+                      "#| fig-cap-location: {fig_cap_location}"[length(fig_cap_location) > 0L],
                       "#| fig-column: {fig_column}"[length(fig_column) > 0L],
                       "#| fig-width: {as_yaml_inline(fig_width)}"[length(fig_width) > 0L],
                       "#| fig-height: {as_yaml_inline(fig_height)}"[length(fig_height) > 0L],
                       "#| fig-pos: {as_yaml_inline(fig_pos)}"[length(fig_pos) > 0L],
                       "#| fig-link: {as_yaml_inline(fig_link)}"[length(fig_link) > 0L],
                       "#| column: {column}"[length(column) > 0L],
+                      "#| layout-ncol: {layout_ncol}"[length(layout_ncol) > 0L],
+                      "#| layout-nrow: {layout_nrow}"[length(layout_nrow) > 0L],
+                      "#| layout:"[length(layout) > 0L],
+                      as_code_chunk_array(layout),
                       "#| out-width: {as_yaml_inline(out_width)}"[length(out_width) > 0L],
                       "#| out-height: {as_yaml_inline(out_height)}"[length(out_height) > 0L],
                       "",
@@ -376,6 +378,9 @@ fig_chunk <- function(body,
 #'   to omit or a character vector.
 #' @param tbl_subcap Table subcaptions. Set as Quarto's [`tbl-subcap`](https://quarto.org/docs/reference/cells/cells-knitr.html#tables) code chunk option.
 #'   Either `NULL` to omit or a character vector.
+#' @param tbl_cap_location Location to place table captions. Set as Quarto's
+#'   [`tbl-cap-location`](https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns) code chunk option. Either `NULL` to omit or one of
+#'   `r chunk_opts$"tbl-cap-location" |> pal::as_md_vals() |> pal::enum_str(sep2 = " or ")`.
 #' @param tbl_colwidths Apply explicit table column widths for Markdown [grid tables](https://pandoc.org/MANUAL.html#extension-grid_tables) and [pipe
 #'   tables](https://pandoc.org/MANUAL.html#extension-pipe_tables) that are more than `columns` characters wide (72 by default).
 #' 
@@ -412,13 +417,21 @@ tbl_chunk <- function(body,
                       label,
                       tbl_cap,
                       tbl_subcap = NULL,
+                      tbl_cap_location = NULL,
                       tbl_colwidths = NULL,
                       tbl_column = NULL,
-                      column = NULL) {
+                      column = NULL,
+                      layout_ncol = NULL,
+                      layout_nrow = NULL,
+                      layout = NULL) {
   
   checkmate::assert_string(body)
   checkmate::assert_string(label,
                            pattern = "^tbl-(\\w|-)+$")
+  if (!is.null(tbl_cap_location)) {
+    tbl_cap_location <- rlang::arg_match(tbl_cap_location,
+                                         values = chunk_opts$`tbl-cap-location`)
+  }
   is_str_tbl_colwidths <- checkmate::test_choice(tbl_colwidths,
                                                  choices = c("auto", "true", "false"))
   is_num_tbl_colwidths <- checkmate::test_numeric(tbl_colwidths,
@@ -434,19 +447,33 @@ tbl_chunk <- function(body,
     column <- rlang::arg_match(arg = column,
                                values = qmd_layout_classes)
   }
+  checkmate::assert_count(layout_ncol,
+                          positive = TRUE,
+                          null.ok = TRUE)
+  checkmate::assert_count(layout_nrow,
+                          positive = TRUE,
+                          null.ok = TRUE)
+  checkmate::assert_list(layout,
+                         types = "numeric",
+                         any.missing = FALSE,
+                         min.len = 1L,
+                         null.ok = TRUE)
   
   # assemble code chunk
   glue::glue(paste0(c("```{{r}}",
                       "#| label: {label}",
                       "#| tbl-cap:"[length(tbl_cap) > 0L],
-                      as_code_chunk_array(tbl_cap),
+                      as_code_chunk_chr_array(tbl_cap),
                       "#| tbl-subcap:"[length(tbl_subcap) > 0L],
-                      as_code_chunk_array(tbl_subcap),
+                      as_code_chunk_chr_array(tbl_subcap),
+                      "#| tbl-cap-location: {tbl_cap_location}"[length(tbl_cap_location) > 0L],
                       "#| tbl-colwidths: {tbl_colwidths}"[is_str_tbl_colwidths],
                       "#| tbl-colwidths:"[is_num_tbl_colwidths],
-                      as_code_chunk_array(tbl_colwidths)[is_num_tbl_colwidths],
+                      as_code_chunk_chr_array(tbl_colwidths)[is_num_tbl_colwidths],
                       "#| tbl-column: {tbl_column}"[length(tbl_column) > 0L],
                       "#| column: {column}"[length(column) > 0L],
+                      "#| layout-ncol: {layout_ncol}"[length(layout_ncol) > 0L],
+                      "#| layout-nrow: {layout_nrow}"[length(layout_nrow) > 0L],
                       "",
                       "{body}",
                       "```",
@@ -820,3 +847,40 @@ default_profiles <- function(input = ".") {
 #' @examples
 #' quappo::qmd_layout_classes
 "qmd_layout_classes"
+
+utils::globalVariables(names = c(".",
+                                 ":=",
+                                 "orcid"))
+
+as_code_chunk_array <- function(x) {
+  
+  if (length(x) == 0L) {
+    return(character())
+  }
+  
+  if (length(x) == 1L && purrr::pluck_depth(x) == 1L) {
+    return(paste0("#|   - ", x))
+  }
+  
+  yaml::as.yaml(x,
+                handlers = list(logical = yaml::verbatim_logical)) |>
+    stringr::str_split_1("\n") %>%
+    magrittr::extract(nchar(.) > 0L) %>%
+    paste0("#|   ", .,
+           collapse = "\n")
+}
+
+as_code_chunk_chr_array <- function(x) {
+  
+  checkmate::assert_character(x,
+                              any.missing = FALSE,
+                              null.ok = TRUE)
+  as_code_chunk_array(x)
+}
+
+as_yaml_inline <- function(x) {
+  
+  yaml::as.yaml(x,
+                handlers = list(logical = yaml::verbatim_logical)) |>
+    stringr::str_remove(pattern = "\n$")
+}

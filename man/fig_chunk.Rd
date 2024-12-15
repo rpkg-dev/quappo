@@ -9,12 +9,16 @@ fig_chunk(
   label,
   fig_cap = NULL,
   fig_subcap = NULL,
+  fig_cap_location = NULL,
   fig_column = NULL,
   fig_width = NULL,
   fig_height = NULL,
   fig_pos = "H",
   fig_link = NULL,
   column = NULL,
+  layout_ncol = NULL,
+  layout_nrow = NULL,
+  layout = NULL,
   out_width = NULL,
   out_height = NULL
 )
@@ -31,6 +35,10 @@ to omit or a character vector.}
 \item{fig_subcap}{Figure subcaptions. Set as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{fig-subcap}} code chunk option.
 Either \code{NULL} to omit or a character vector.}
 
+\item{fig_cap_location}{Location to place figure captions. Set as Quarto's
+\href{https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns}{\code{fig-cap-location}} code chunk option. Either \code{NULL} to omit or one of
+\code{"top"}, \code{"bottom"} or \code{"margin"}.}
+
 \item{fig_column}{Quarto \href{https://quarto.org/docs/authoring/article-layout.html#available-columns}{article layout class} for the figure output. Set as
 Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#page-columns}{\code{fig-column}} code chunk option. Either \code{NULL} to omit or one of
 \itemize{
@@ -41,6 +49,7 @@ Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#page-col
 \item \code{"page"}
 \item \code{"page-left"}
 \item \code{"page-right"}
+\item \code{"page-inset"}
 \item \code{"page-inset-left"}
 \item \code{"page-inset-right"}
 \item \code{"screen"}
@@ -76,6 +85,7 @@ as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#page-
 \item \code{"page"}
 \item \code{"page-left"}
 \item \code{"page-right"}
+\item \code{"page-inset"}
 \item \code{"page-inset-left"}
 \item \code{"page-inset-right"}
 \item \code{"screen"}
@@ -87,6 +97,18 @@ as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#page-
 \item \code{"screen-inset-right"}
 \item \code{"margin"}
 }}
+
+\item{layout_ncol}{Number of columns to arrange the chunk output in. Set as Quarto's
+\href{https://quarto.org/docs/reference/cells/cells-knitr.html#panel-layout}{\code{layout-ncol}} code chunk option. Either \code{NULL} to omit or a positive integerish
+number.}
+
+\item{layout_nrow}{Number of rows to arrange the chunk output in. Set as Quarto's
+\href{https://quarto.org/docs/reference/cells/cells-knitr.html#panel-layout}{\code{layout-nrow}} code chunk option. Either \code{NULL} to omit or a positive integerish
+number.}
+
+\item{layout}{\href{https://quarto.org/docs/authoring/figures.html#complex-layouts}{Custom layout} proportions. Set as Quarto's
+\href{https://quarto.org/docs/reference/cells/cells-knitr.html#panel-layout}{\code{layout}} code chunk option. A list of numeric vectors where each vector defines
+the column proportions of a row. Note that the numbers in a row are arbitrary and don’t need to add up to a particular total.}
 
 \item{out_width}{Width of the plot in the output document, which can be different from its physical \code{fig_width}, i.e., plots can be scaled in the output
 document. Set as Quarto's \href{https://quarto.org/docs/reference/cells/cells-knitr.html#figures}{\code{out-width}} code chunk option. Either \code{NULL} to omit or a
