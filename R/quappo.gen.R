@@ -880,6 +880,11 @@ as_code_chunk_chr_array <- function(x) {
 
 as_yaml_inline <- function(x) {
   
+  # pass through `!expr`s
+  if (is.character(x) && stringr::str_detect(x, "^\\!expr\\s+")) {
+    return(x)
+  }
+  
   yaml::as.yaml(x,
                 handlers = list(logical = yaml::verbatim_logical)) |>
     stringr::str_remove(pattern = "\n$")
